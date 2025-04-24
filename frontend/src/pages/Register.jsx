@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/authApi";
-import AuthForm from "../components/LoginForm";
+import AuthForm from "../components/AuthForm";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -10,9 +10,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
-import RegisterForm from "../components/RegisterForm";
 
-export default function RegisterPage() {
+export default function Register() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -41,7 +40,7 @@ export default function RegisterPage() {
           </Alert>
         )}
 
-        <RegisterForm
+        <AuthForm
           onSubmit={(data) => mutation.mutate(data)}
           isLoading={mutation.isPending}
           buttonLabel={

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/authApi";
-import AuthForm from "../components/LoginForm";
+import AuthForm from "../components/AuthForm";
 import {
   Box,
   Typography,
@@ -10,9 +10,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
-import LoginForm from "../components/LoginForm";
 
-export default function LoginPage() {
+export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   // Hook que te permite ejecutar funciones asíncronas (como peticiones POST) y manejar su estado (loading, success, error).
@@ -42,7 +41,7 @@ export default function LoginPage() {
           </Alert>
         )}
 
-        <LoginForm
+        <AuthForm
           onSubmit={(data) => mutation.mutate(data)}
           isLoading={mutation.isPending}
           buttonLabel={
