@@ -12,10 +12,10 @@ class UserFactory extends Factory
     {
         return [
             'first_name' => $this->faker->firstName(),
-            'last_name'  => $this->faker->lastName(),
-            'email'      => $this->faker->unique()->safeEmail(),
-            'password'   => Hash::make('password'), // Contraseña fija para pruebas
-            'gender'     => $this->faker->randomElement(['male', 'female']),
+            'last_name' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => Hash::make('password'),
+            'gender' => $this->faker->randomElement(['male', 'female']),
             'birth_date' => $this->faker->date(),
             'registered_at' => now(),
         ];
