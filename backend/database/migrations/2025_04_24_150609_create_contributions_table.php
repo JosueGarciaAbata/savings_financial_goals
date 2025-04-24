@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade');
             $table->date('contribution_date');
             $table->decimal('amount', 10, 2);
+            $table->timestamps();
         });        
     }
 

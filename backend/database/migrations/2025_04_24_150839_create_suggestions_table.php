@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade');
+            $table->text('message');
+            $table->timestamp('calculated_at')->useCurrent();
         });
+        
     }
 
     /**
