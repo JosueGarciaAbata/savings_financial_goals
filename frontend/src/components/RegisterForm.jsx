@@ -41,7 +41,7 @@ import {
           {/* FOTO PERFIL */}
           <Box display="flex" justifyContent="center" position="relative">
             <Avatar
-              src={form.fotoPerfil ? URL.createObjectURL(form.fotoPerfil) : ""}
+              src={form.profile_picture ? URL.createObjectURL(form.profile_picture) : ""}
               sx={{ width: 80, height: 80 }}
             />
             <IconButton
