@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contributions', function (Blueprint $table) {
+        Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade');
-            $table->date('contribution_date');
-            $table->decimal('amount', 10, 2);
-        });        
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contributions');
+        Schema::dropIfExists('suggestions');
     }
 };
