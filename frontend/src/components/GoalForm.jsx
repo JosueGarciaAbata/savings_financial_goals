@@ -5,10 +5,10 @@ import { getCategories } from "../api/goalsApi";
 
 export default function GoalForm({ onSubmit, isLoading }) {
   const [form, setForm] = useState({
-    nombre: "",
-    categoriaId: "",
-    monto: "",
-    fechaLimite: "",
+    name: "",
+    category_id: "",
+    target_amount: "",
+    deadline: "",
   });
 
   const [error, setError] = useState(null);
@@ -26,16 +26,16 @@ export default function GoalForm({ onSubmit, isLoading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.nombre || !form.categoriaId || !form.monto || !form.fechaLimite) {
+    if (!form.name || !form.category_id || !form.target_amount || !form.deadline) {
       return setError("Todos los campos son obligatorios.");
     }
 
-    if (isNaN(form.monto) || parseFloat(form.monto) <= 0) {
+    if (isNaN(form.target_amount) || parseFloat(form.target_amount) <= 0) {
       return setError("El monto debe ser un número positivo.");
     }
 
-    const fechaActual = new Date().toISOString().split("T")[0];
-    if (form.fechaLimite < fechaActual) {
+    const curDate = new Date().toISOString().split("T")[0];
+    if (form.deadline < curDate) {
       return setError("La fecha límite debe ser posterior a hoy.");
     }
 
@@ -50,17 +50,17 @@ export default function GoalForm({ onSubmit, isLoading }) {
 
         <TextField
           label="Nombre de la meta"
-          name="nombre"
-          value={form.nombre}
+          name="name"
+          value={form.name}
           onChange={handleChange}
           required
         />
 
         <TextField
           label="Categoría"
-          name="categoriaId"
+          name="category_id"
           select
-          value={form.categoriaId}
+          value={form.category_id}
           onChange={handleChange}
           required
           disabled={categoriasLoading}
@@ -74,18 +74,18 @@ export default function GoalForm({ onSubmit, isLoading }) {
 
         <TextField
           label="Monto objetivo"
-          name="monto"
+          name="target_amount"
           type="number"
-          value={form.monto}
+          value={form.target_amount}
           onChange={handleChange}
           required
         />
 
         <TextField
           label="Fecha límite"
-          name="fechaLimite"
+          name="deadline"
           type="date"
-          value={form.fechaLimite}
+          value={form.deadline}
           onChange={handleChange}
           InputLabelProps={{ shrink: true }}
           required
