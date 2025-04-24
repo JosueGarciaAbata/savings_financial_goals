@@ -3,13 +3,25 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
+Route::prefix('auth')->group(function () {
+    // Públicas
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+
+    // Protegidas con jwt.cookie + auth:api
+    Route::middleware(['jwt.cookie'])->group(function () {
+        Route::post('/me', [AuthController::class, 'me'])->name('me');
+        Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
+});
+
+
+Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
+
+    Route::get('/test', function () {
+        return response()->json([
+            'message' => 'Ruta protegida funcionando ✅'
+        ]);
+    });
 });
