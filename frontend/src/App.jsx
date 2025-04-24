@@ -17,7 +17,7 @@ function App() {
           <Route path="register" element={<Register />} />
         </Route>
 
-        <Route path="/goals" element={<Panel />} />
+        <Route path="/goals-progress" element={<Panel />} />
         <Route path="goals">
           {/* <Route index element={<ConcertsHome />} /> */}
           {/* <Route path=":city" element={<City />} /> */}

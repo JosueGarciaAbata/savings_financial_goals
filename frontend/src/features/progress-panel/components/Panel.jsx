@@ -35,6 +35,48 @@ const goals = [
       },
     ],
   },
+  {
+    id: 1,
+    name: "Viaje a Cusco",
+    status: "en progreso",
+    target_amount: 500,
+    deadline: "2025-04-27",
+    created_at: "2025-04-07",
+    contributions: [
+      { id: 1, contribution_date: "2025-04-10", amount: 168 },
+      { id: 1, contribution_date: "2025-04-17", amount: 168 },
+      { id: 1, contribution_date: "2025-04-24", amount: 100 },
+    ],
+    suggestions: [
+      {
+        id: 1,
+        message:
+          "Vas un poco retrasado. Para cumplir tu meta, intenta ahorrar $62.50 por semana.",
+        calculated_at: "2025-04-21T10:00:00Z",
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: "Viaje a Cusco",
+    status: "en progreso",
+    target_amount: 500,
+    deadline: "2025-04-27",
+    created_at: "2025-04-07",
+    contributions: [
+      { id: 1, contribution_date: "2025-04-10", amount: 168 },
+      { id: 1, contribution_date: "2025-04-17", amount: 168 },
+      { id: 1, contribution_date: "2025-04-24", amount: 100 },
+    ],
+    suggestions: [
+      {
+        id: 1,
+        message:
+          "Vas un poco retrasado. Para cumplir tu meta, intenta ahorrar $62.50 por semana.",
+        calculated_at: "2025-04-21T10:00:00Z",
+      },
+    ],
+  },
 ]
 
 const Panel = () => {
