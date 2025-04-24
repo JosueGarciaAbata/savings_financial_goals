@@ -3,6 +3,7 @@ import "./App.css"
 import AuthLayout from "./layouts/AuthLayout"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import ContributionList from "./features/progress-panel/components/ContributionList"
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Route path="register" element={<Register />} />
         </Route>
 
-        <Route path="concerts">
+        <Route path="/goals" element={<ContributionList />} />
+        <Route path="goals">
           {/* <Route index element={<ConcertsHome />} /> */}
           {/* <Route path=":city" element={<City />} /> */}
           {/* <Route path="trending" element={<Trending />} /> */}
