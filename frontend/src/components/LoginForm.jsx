@@ -1,7 +1,7 @@
 import { TextField, Button, Stack, Box } from "@mui/material";
 import { useState } from "react";
 
-export default function AuthForm({ onSubmit, isLoading, buttonLabel }) {
+export default function LoginForm({ onSubmit, isLoading, buttonLabel }) {
   const [form, setForm] = useState({ email: "", password: "" });
 
   return (

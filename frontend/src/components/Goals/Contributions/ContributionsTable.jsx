@@ -1,0 +1,32 @@
+import {
+    Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography,
+  } from "@mui/material";
+  
+  export default function ContributionsTable({ contributions }) {
+    const total = contributions.reduce((sum, c) => sum + parseFloat(c.amount), 0);
+  
+    return (
+      <Paper sx={{ mt: 4, p: 3, borderRadius: 2, boxShadow: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          Aportes realizados (Total: ${total.toFixed(2)})
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Fecha</TableCell>
+              <TableCell>Monto</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {contributions.map((c) => (
+              <TableRow key={c.id}>
+                <TableCell>{c.contribution_date}</TableCell>
+                <TableCell>${parseFloat(c.amount).toFixed(2)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
+  }
+  
