@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->string('name');
+            $table->decimal('target_amount', 10, 2);
+            $table->date('deadline');
+            $table->string('status')->default('active');
+            $table->timestamp('created_at')->useCurrent();
         });
+        
     }
 
     /**
