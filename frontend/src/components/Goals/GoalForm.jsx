@@ -1,7 +1,7 @@
 import { TextField, Button, Stack, MenuItem, Box, Alert } from "@mui/material";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../api/goalsApi";
+import { getCategories } from "../../api/goalsApi";
 
 export default function GoalForm({ onSubmit, isLoading }) {
   const [form, setForm] = useState({

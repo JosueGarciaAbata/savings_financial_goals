@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createGoal } from "../api/goalsApi";
-import GoalForm from "../components/GoalForm";
+import GoalForm from "../components/Goals/GoalForm";
 import {
   Container,
   Typography,
