@@ -3,6 +3,15 @@ import React from "react"
 import GoalItem from "./GoalItem"
 import ProgressBar from "./ProgressBar"
 import SuggestionMessage from "./SuggestionMessage"
+import {
+  Box,
+  Paper,
+  Typography,
+  Stack,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material"
 
 const goals = [
   {
@@ -10,10 +19,12 @@ const goals = [
     name: "Viaje a Cusco",
     status: "en progreso",
     target_amount: 500,
+    deadline: "2025-04-27",
+    created_at: "2025-04-07",
     contributions: [
-      { id: 1, contribution_date: "2025-04-05", amount: 50 },
-      { id: 2, contribution_date: "2025-04-12", amount: 75 },
-      { id: 3, contribution_date: "2025-04-19", amount: 100 },
+      { id: 1, contribution_date: "2025-04-10", amount: 168 },
+      { id: 1, contribution_date: "2025-04-17", amount: 168 },
+      { id: 1, contribution_date: "2025-04-24", amount: 100 },
     ],
     suggestions: [
       {
@@ -24,39 +35,43 @@ const goals = [
       },
     ],
   },
-  {
-    id: 2,
-    name: "Laptop nueva",
-    status: "en progreso",
-    target_amount: 1000,
-    contributions: [
-      { id: 1, contribution_date: "2025-04-10", amount: 150 },
-      { id: 2, contribution_date: "2025-04-20", amount: 200 },
-    ],
-    suggestions: [
-      {
-        id: 1,
-        message:
-          "Buen avance, pero podrías aumentar tu ritmo para cumplir en el tiempo estimado.",
-        calculated_at: "2025-04-21T10:00:00Z",
-      },
-    ],
-  },
 ]
 
 const Panel = () => {
   return (
-    <div className="flex flex-col gap-6 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold">Panel de Progreso</h2>
+    <Box sx={{ p: 4, bgcolor: "#fff", borderRadius: 2, boxShadow: 2 }}>
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        gutterBottom
+        sx={{ textAlign: "center", mb: 3 }}
+      >
+        Panel de Progreso
+      </Typography>
 
-      {goals.map((goal) => (
-        <div key={goal.id} className="border p-4 rounded-md shadow-sm">
-          <GoalItem goal={goal} />
-          <ProgressBar goal={goal} />
-          <SuggestionMessage messages={goal.suggestions} />
-        </div>
-      ))}
-    </div>
+      <Stack spacing={4}>
+        {goals.map((goal) => (
+          <Accordion
+            key={goal.id}
+            disableGutters
+            elevation={0}
+            sx={{ mb: 2, border: "1px solid #e0e0e0", borderRadius: 2 }}
+          >
+            <AccordionSummary>
+              <Typography variant="subtitle1">
+                🎯 Meta: <strong>{goal.name}</strong>
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <GoalItem goal={goal} />
+              <Box mt={2}>
+                <ProgressBar goal={goal} />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Stack>
+    </Box>
   )
 }
 
