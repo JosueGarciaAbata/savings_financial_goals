@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/authApi";
-import AuthForm from "../components/AuthForm";
+import AuthForm from "../components/LoginForm";
 import {
   Box,
   Typography,
@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
+import LoginForm from "../components/LoginForm";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function Login() {
           </Alert>
         )}
 
-        <AuthForm
+        <LoginForm
           onSubmit={(data) => mutation.mutate(data)}
           isLoading={mutation.isPending}
           buttonLabel={
