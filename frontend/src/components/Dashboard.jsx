@@ -15,6 +15,7 @@ import { Outlet, Link, useLocation } from "react-router-dom"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import BarChartIcon from "@mui/icons-material/BarChart"
 import { getAllDashboard } from "./service/getAllDashboard"
+import EmptyState from "./EmptyState"
 
 const drawerWidth = 240
 
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
       <AppBar position="fixed" sx={{ zIndex: 1201 }}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Bienvenido, Josué 👋
+            <Link to="/dashboard">Bienvenido, Josué 👋</Link>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -81,7 +82,7 @@ const DashboardLayout = () => {
         <Toolbar />
         <Outlet />
 
-        {data.length > 0 ? data.map() : "No hay datos"}
+        {data.length > 0 ? data.map() : <EmptyState />}
       </Box>
     </Box>
   )
