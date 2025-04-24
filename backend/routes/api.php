@@ -35,14 +35,7 @@ Route::get('/test_email', function () {
     return response()->json(['message' => 'Correo enviado a tu cuenta ✅']);
 });
 
-Route::middleware(['jwt.cookie'])->group(function () {
 
-
-    Route::get('/test', function () {
-        return response()->json(['message' => 'Hola mundo']);
-    });
-
-});
 
 
 
