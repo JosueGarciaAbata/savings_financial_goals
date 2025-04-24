@@ -13,17 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile_picture')->nullable();
-            $table->string('gender')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->timestamp('registered_at')->useCurrent();
-        });        
+            $table->rememberToken();
+            $table->timestamps();
+        });
 
-        /*Schema::create('password_reset_tokens', function (Blueprint $table) {
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
@@ -36,7 +34,7 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
-        });*/
+        });
     }
 
     /**
