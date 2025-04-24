@@ -1,20 +1,26 @@
+import axios from "./axiosInstance";
+
 export async function login(data) {
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error("Login failed");
-    return res.json();
+  const response = await axios.post("/login", data);
+  return response.data;
+}
+
+export async function register(data) {
+  const formData = new FormData();
+
+  // Añadir todos los campos
+  for (const key in data) {
+    if (data[key]) {
+      formData.append(key, data[key]);
+    }
   }
+  console.log(formData);
   
-  export async function register(data) {
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error("Registration failed");
-    return res.json();
-  }
+  const response = await axios.post("/register", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   
+  return response.data;
+}
