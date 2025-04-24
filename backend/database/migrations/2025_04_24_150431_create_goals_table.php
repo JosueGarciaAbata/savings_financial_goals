@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('target_amount', 10, 2);
             $table->date('deadline');
             $table->string('status')->default('active');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
         
     }
