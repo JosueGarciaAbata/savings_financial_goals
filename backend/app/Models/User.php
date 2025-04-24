@@ -29,12 +29,13 @@ use App\Models\Report;
  */
 class User extends Authenticatable implements JWTSubject
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'first_name',
@@ -50,7 +51,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
