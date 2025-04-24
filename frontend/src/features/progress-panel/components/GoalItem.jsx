@@ -16,8 +16,10 @@ const GoalItem = ({ goal }) => {
             <strong>Objetivo:</strong> ${goal.target_amount.toFixed(2)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <strong>Fecha límite:</strong> {goal.deadline} ({diasRestantes} días
-            restantes)
+            <strong>Fecha límite:</strong>{" "}
+            {diasRestantes >= 0
+              ? `${diasRestantes} días restantes`
+              : `${Math.abs(diasRestantes)} días de retraso`}
           </Typography>
         </Stack>
       </CardContent>

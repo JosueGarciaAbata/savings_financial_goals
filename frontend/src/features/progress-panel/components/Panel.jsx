@@ -1,4 +1,5 @@
 // src/features/progress-panel/components/Panel.jsx
+// Aqui debe venir un id y con ese id buscar la meta y lo demás se mantiene.
 import React from "react"
 import GoalItem from "./GoalItem"
 import ProgressBar from "./ProgressBar"
@@ -19,54 +20,11 @@ const goals = [
     name: "Viaje a Cusco",
     status: "en progreso",
     target_amount: 500,
-    deadline: "2025-04-27",
+    deadline: "2025-04-30",
     created_at: "2025-04-07",
     contributions: [
-      { id: 1, contribution_date: "2025-04-10", amount: 168 },
-      { id: 1, contribution_date: "2025-04-17", amount: 168 },
-      { id: 1, contribution_date: "2025-04-24", amount: 100 },
-    ],
-    suggestions: [
-      {
-        id: 1,
-        message:
-          "Vas un poco retrasado. Para cumplir tu meta, intenta ahorrar $62.50 por semana.",
-        calculated_at: "2025-04-21T10:00:00Z",
-      },
-    ],
-  },
-  {
-    id: 1,
-    name: "Viaje a Cusco",
-    status: "en progreso",
-    target_amount: 500,
-    deadline: "2025-04-27",
-    created_at: "2025-04-07",
-    contributions: [
-      { id: 1, contribution_date: "2025-04-10", amount: 168 },
-      { id: 1, contribution_date: "2025-04-17", amount: 168 },
-      { id: 1, contribution_date: "2025-04-24", amount: 100 },
-    ],
-    suggestions: [
-      {
-        id: 1,
-        message:
-          "Vas un poco retrasado. Para cumplir tu meta, intenta ahorrar $62.50 por semana.",
-        calculated_at: "2025-04-21T10:00:00Z",
-      },
-    ],
-  },
-  {
-    id: 1,
-    name: "Viaje a Cusco",
-    status: "en progreso",
-    target_amount: 500,
-    deadline: "2025-04-27",
-    created_at: "2025-04-07",
-    contributions: [
-      { id: 1, contribution_date: "2025-04-10", amount: 168 },
-      { id: 1, contribution_date: "2025-04-17", amount: 168 },
-      { id: 1, contribution_date: "2025-04-24", amount: 100 },
+      { id: 1, contribution_date: "2025-04-10", amount: 200 },
+      { id: 1, contribution_date: "2025-04-17", amount: 100 },
     ],
     suggestions: [
       {

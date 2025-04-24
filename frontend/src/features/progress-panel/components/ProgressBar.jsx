@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   Divider,
+  Alert,
   LinearProgress,
   Paper,
 } from "@mui/material"
@@ -92,14 +93,14 @@ const ProgressBar = ({ goal }) => {
 
         {goalInRisk && (
           <Alert severity="error" sx={{ mt: 2 }}>
-            🚨 Estás lejos del ritmo esperado. Considera hacer mayores aportes
-            para alcanzar la meta a tiempo.
+            Estás lejos del ritmo esperado. Considera hacer mayores aportes para
+            alcanzar la meta a tiempo.
           </Alert>
         )}
 
         {totalAportado >= goal.target_amount && (
           <Alert severity="success" sx={{ mt: 2 }}>
-            🎉 ¡Meta cumplida! Has alcanzado tu objetivo de ahorro.
+            ¡Meta cumplida! Has alcanzado tu objetivo de ahorro.
           </Alert>
         )}
 
