@@ -1,10 +1,9 @@
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import AuthLayout from "./layouts/AuthLayout";
-import LoginPage from "./pages/Login";
-import RegisterPage from "./pages/Register";
-import GoalsPage from "./pages/Goals";
-import GoalPage from "./pages/GoalPage";
+import { Route, Routes } from "react-router-dom"
+import "./App.css"
+import AuthLayout from "./layouts/AuthLayout"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Panel from "./features/progress-panel/components/Panel"
 
 function App() {
   return (
@@ -14,11 +13,9 @@ function App() {
         {/* <Route path="about" element={<About />} /> */}
 
         <Route element={<AuthLayout />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Route>
-        <Route path="goals" element={<GoalsPage/>} />
-        <Route path="goal/:id" element={<GoalPage/>} />
 
         <Route path="/goals-progress" element={<Panel />} />
         <Route path="goals">
