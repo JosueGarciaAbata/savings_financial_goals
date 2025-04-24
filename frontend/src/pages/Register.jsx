@@ -1,27 +1,62 @@
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/authApi";
 import AuthForm from "../components/AuthForm";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Container,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
+import { useState } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      alert("Registro exitoso");
-      navigate("/login");
+      navigate("/login"); // Redirigir al login
     },
-    onError: () => alert("Error al registrarse"),
+    onError: () => {
+      setError("Error al registrarse");
+    },
   });
 
   return (
-    <div>
-      <h2>Registro</h2>
-      <AuthForm
-        onSubmit={(data) => mutation.mutate(data)}
-        isLoading={mutation.isPending}
-        buttonLabel="Registrar"
-      />
-    </div>
+    <Container maxWidth="xs" sx={{ mt: 8 }}>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <Typography component="h1" variant="h5" mb={2}>
+          Crear cuenta
+        </Typography>
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <AuthForm
+          onSubmit={(data) => mutation.mutate(data)}
+          isLoading={mutation.isPending}
+          buttonLabel={
+            mutation.isPending ? <CircularProgress size={24} /> : "Registrarse"
+          }
+        />
+        <Typography variant="body2" mt={2}>
+          ¿Ya tienes cuenta?{" "}
+          <Link
+            to="/login"
+            style={{ color: "#1976d2", textDecoration: "none" }}
+          >
+            Inicia sesión
+          </Link>
+        </Typography>
+      </Box>
+    </Container>
   );
 }
