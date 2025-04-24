@@ -1,27 +1,28 @@
-import { useMutation } from "@tanstack/react-query";
-import { createGoal } from "../api/goalsApi";
-import GoalForm from "../components/Goals/GoalForm";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { createGoal } from "../api/goalsApi"
+import GoalForm from "../components/Goals/GoalForm"
 import {
   Container,
   Typography,
   Box,
   Alert,
   CircularProgress,
-} from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+} from "@mui/material"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function GoalsPage() {
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: createGoal,
     onSuccess: () => {
-      navigate("/dashboard");
+      queryClient.invalidateQueries(["goals"])
+      navigate("/dashboard")
     },
     onError: () => setError("No se pudo crear la meta."),
-  });
+  })
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -30,7 +31,11 @@ export default function GoalsPage() {
           Crear nueva meta
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
         <GoalForm
           onSubmit={(data) => mutation.mutate(data)}
@@ -38,5 +43,5 @@ export default function GoalsPage() {
         />
       </Box>
     </Container>
-  );
+  )
 }

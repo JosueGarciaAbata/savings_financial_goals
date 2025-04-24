@@ -27,9 +27,12 @@ const colorMap = {
 }
 
 const ProgressBar = ({ goal }) => {
+  console.log(goal)
   let color = "success"
-
-  const totalAportado = goal.contributions.reduce((sum, c) => sum + c.amount, 0)
+  const totalAportado = goal.contributions.reduce(
+    (sum, c) => sum + parseFloat(c.amount),
+    0
+  )
   const startDate = parseISO(goal.created_at)
   const endDate = parseISO(goal.deadline)
   const today = new Date()
@@ -64,12 +67,11 @@ const ProgressBar = ({ goal }) => {
     color = "success" // verde
   }
   const lineColor = colorMap[color]
-
-  const progreso = (totalAportado / goal.target_amount) * 100
+  const progreso = Math.min((totalAportado / goal.target_amount) * 100, 100)
   const data = goal.contributions.map((c, index) => {
     const acumulado = goal.contributions
       .slice(0, index + 1)
-      .reduce((s, a) => s + a.amount, 0)
+      .reduce((s, a) => s + parseFloat(a.amount), 0)
     return {
       date: c.contribution_date,
       amount: acumulado,

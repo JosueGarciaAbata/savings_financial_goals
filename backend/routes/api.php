@@ -5,28 +5,42 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContributionController;
-
+use App\Mail\GoalReminderMail;
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-
+use Illuminate\Support\Facades\Mail;
 
 Route::prefix('auth')->group(function () {
-    // Públicas
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
-    // Protegidas con jwt.cookie + auth:api
-    Route::middleware(['auth:api'])->group(function () {
-        Route::post('/me', [AuthController::class, 'me'])->name('me');
-        Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/refresh', [AuthController::class, 'refresh']);
     });
 });
 
 
+Route::get('/test_email', function () {
+    $goal = [
+        'name' => 'Meta de prueba: Comprar laptop',
+        'deadline' => now()->addDays(30)->format('Y-m-d'),
+        'saved' => 150,
+        'target' => 500
+    ];
+
+    Mail::to('bjeferssonvinicio2005@gmail.com')->send(new GoalReminderMail($goal));
+
+    return response()->json(['message' => 'Correo enviado a tu cuenta ✅']);
+});
+
 Route::middleware(['jwt.cookie'])->group(function () {
 
-    // Poner aqui las rutas que se van a proteger 
+
+    Route::get('/test', function () {
+        return response()->json(['message' => 'Hola mundo']);
+    });
 
 });
 
@@ -51,9 +65,11 @@ Route::get('/fake-login/{userId}', function ($userId) {
     ]);
 });
 
+
 Route::middleware('auth:api')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
 });
+
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/contributions', [ContributionController::class, 'index']); // todos los aportes del usuario

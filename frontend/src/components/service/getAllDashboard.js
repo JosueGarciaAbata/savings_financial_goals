@@ -16,6 +16,5 @@ export async function getAllDashboard() {
   }
 
   const data = await response.json()
-  console.log(data)
-  return data
+  return data.data
 }

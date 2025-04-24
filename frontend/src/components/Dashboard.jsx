@@ -9,20 +9,19 @@ import {
   Toolbar,
   AppBar,
   Typography,
+  Paper,
   Box,
+  ListItemButton,
 } from "@mui/material"
 import { Outlet, Link, useLocation } from "react-router-dom"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import BarChartIcon from "@mui/icons-material/BarChart"
-import { getAllDashboard } from "./service/getAllDashboard"
 import EmptyState from "./EmptyState"
 
 const drawerWidth = 240
 
 const DashboardLayout = () => {
   const location = useLocation()
-
-  const data = getAllDashboard()
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -81,8 +80,6 @@ const DashboardLayout = () => {
       >
         <Toolbar />
         <Outlet />
-
-        {data.length > 0 ? data.map() : <EmptyState />}
       </Box>
     </Box>
   )

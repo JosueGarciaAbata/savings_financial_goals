@@ -7,33 +7,30 @@ import GoalsPage from "./pages/Goals"
 import GoalPage from "./pages/GoalPage"
 import Panel from "./features/progress-panel/components/Panel"
 import Dashboard from "./components/Dashboard"
+import DashboardHome from "./components/DashboardHome"
 
 function App() {
   return (
     <>
       <Routes>
-        {/* <Route index element={<Home />} /> */}
-        {/* <Route path="about" element={<About />} /> */}
-
+        {/* Rutas publicas */}
         <Route element={<AuthLayout />}>
           <Route path="/" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>
-        {/* Dashboard principal */}
+
+        {/* Rutas protegidas */}
         <Route path="dashboard" element={<Dashboard />}>
-          {/* Rutas dentro del dashboard */}
+          <Route index element={<DashboardHome />} />
           <Route path="goals">
-            <Route index element={<GoalsPage />} /> {/* /dashboard/goals */}
-            <Route path=":id" element={<GoalPage />} />{" "}
-            {/* /dashboard/goals/3 */}
-            <Route path="progress" element={<Panel />} />{" "}
-            {/* /dashboard/goals/progress */}
+            <Route index element={<GoalsPage />} />
+            <Route path=":id" element={<GoalPage />} />
           </Route>
+          {/* <Route path="reports" element={<ReportsPage />} /> */}
         </Route>
 
-        {/* <Route index element={<ConcertsHome />} /> */}
-        {/* <Route path=":city" element={<City />} /> */}
-        {/* <Route path="trending" element={<Trending />} /> */}
+        {/* fallback */}
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </>
   )

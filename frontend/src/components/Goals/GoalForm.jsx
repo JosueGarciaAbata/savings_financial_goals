@@ -1,7 +1,7 @@
-import { TextField, Button, Stack, MenuItem, Box, Alert } from "@mui/material";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../../api/goalsApi";
+import { TextField, Button, Stack, MenuItem, Box, Alert } from "@mui/material"
+import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { getCategories } from "../../api/goalsApi"
 
 export default function GoalForm({ onSubmit, isLoading }) {
   const [form, setForm] = useState({
@@ -9,39 +9,44 @@ export default function GoalForm({ onSubmit, isLoading }) {
     category_id: "",
     target_amount: "",
     deadline: "",
-  });
+  })
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null)
 
-  const { data: categorias, isLoading: categoriasLoading } = useQuery({
+  const { data: categories, isLoading: categoriasLoading } = useQuery({
     queryKey: ["categorias"],
     queryFn: getCategories,
-  });
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!form.name || !form.category_id || !form.target_amount || !form.deadline) {
-      return setError("Todos los campos son obligatorios.");
+    if (
+      !form.name ||
+      !form.category_id ||
+      !form.target_amount ||
+      !form.deadline
+    ) {
+      return setError("Todos los campos son obligatorios.")
     }
 
     if (isNaN(form.target_amount) || parseFloat(form.target_amount) <= 0) {
-      return setError("El monto debe ser un número positivo.");
+      return setError("El monto debe ser un número positivo.")
     }
 
-    const curDate = new Date().toISOString().split("T")[0];
+    const curDate = new Date().toISOString().split("T")[0]
     if (form.deadline < curDate) {
-      return setError("La fecha límite debe ser posterior a hoy.");
+      return setError("La fecha límite debe ser posterior a hoy.")
     }
 
-    setError(null);
-    onSubmit(form);
-  };
+    setError(null)
+    onSubmit(form)
+  }
 
   return (
     <form onSubmit={handleSubmit} style={{ width: "100%" }}>
@@ -65,7 +70,7 @@ export default function GoalForm({ onSubmit, isLoading }) {
           required
           disabled={categoriasLoading}
         >
-          {categorias?.map((cat) => (
+          {categories?.map((cat) => (
             <MenuItem key={cat.id} value={cat.id}>
               {cat.name}
             </MenuItem>
@@ -106,5 +111,5 @@ export default function GoalForm({ onSubmit, isLoading }) {
         </Box>
       </Stack>
     </form>
-  );
+  )
 }

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
     /**
-     * Register a User.
+     * Registrar nuevo usuario
      */
     public function register()
     {
@@ -51,7 +53,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login and return JWT as Bearer Token.
+     * Login y devolver JWT
      */
     public function login()
     {
@@ -61,16 +63,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return response()->json([
-            'message' => 'Login exitoso',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        return $this->respondWithToken($token);
     }
 
     /**
-     * Return authenticated user.
+     * Retornar usuario autenticado
      */
     public function me()
     {
@@ -78,29 +75,34 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout (invalidate token).
+     * Logout e invalidar token
      */
     public function logout()
     {
         try {
-            JWTAuth::invalidate(JWTAuth::getToken());
+            auth()->logout();
             return response()->json(['message' => 'Logout exitoso']);
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'No se pudo cerrar sesión',
-                'detalle' => $e->getMessage()
-            ], 500);
+            return response()->json(['error' => 'Error al cerrar sesión'], 500);
         }
     }
 
     /**
-     * Refresh the JWT.
+     * Renovar token
      */
     public function refresh()
     {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Estructura del token
+     */
+    protected function respondWithToken($token)
+    {
         return response()->json([
-            'access_token' => auth()->refresh(),
-            'token_type' => 'Bearer',
+            'access_token' => $token,
+            'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
