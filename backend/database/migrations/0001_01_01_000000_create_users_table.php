@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,10 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_picture')->nullable();
-            $table->string('gender')->nullable();
-            $table->date('birth_date')->nullable();
+            $table->string('gender');
+            $table->date('birth_date');
             $table->timestamp('registered_at')->useCurrent();
-        });        
+        });
 
         /*Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
