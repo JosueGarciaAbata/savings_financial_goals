@@ -20,14 +20,15 @@ function App() {
         <Route path="goals" element={<GoalsPage/>} />
         <Route path="goal/:id" element={<GoalPage/>} />
 
-        <Route path="concerts">
+        <Route path="/goals-progress" element={<Panel />} />
+        <Route path="goals">
           {/* <Route index element={<ConcertsHome />} /> */}
           {/* <Route path=":city" element={<City />} /> */}
           {/* <Route path="trending" element={<Trending />} /> */}
         </Route>
       </Routes>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
