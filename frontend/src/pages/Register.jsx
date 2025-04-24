@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import RegisterForm from "../components/RegisterForm";
 
-export default function Register() {
+export default function RegisterPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 

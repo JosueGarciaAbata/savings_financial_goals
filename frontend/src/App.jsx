@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthLayout from "./layouts/AuthLayout";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import GoalsPage from "./pages/Goals";
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
         {/* <Route path="about" element={<About />} /> */}
 
         <Route element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
+        <Route path="goals" element={<GoalsPage/>} />
 
         <Route path="concerts">
           {/* <Route index element={<ConcertsHome />} /> */}

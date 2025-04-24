@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import LoginForm from "../components/LoginForm";
 
-export default function Login() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   // Hook que te permite ejecutar funciones asíncronas (como peticiones POST) y manejar su estado (loading, success, error).
