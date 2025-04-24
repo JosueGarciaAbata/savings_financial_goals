@@ -12,11 +12,14 @@ function App() {
         {/* <Route path="about" element={<About />} /> */}
 
         <Route element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
+        <Route path="goals" element={<GoalsPage/>} />
+        <Route path="goal/:id" element={<GoalPage/>} />
 
-        <Route path="concerts">
+        <Route path="/goals-progress" element={<Panel />} />
+        <Route path="goals">
           {/* <Route index element={<ConcertsHome />} /> */}
           {/* <Route path=":city" element={<City />} /> */}
           {/* <Route path="trending" element={<Trending />} /> */}
