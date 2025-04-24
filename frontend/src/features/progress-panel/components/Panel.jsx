@@ -3,7 +3,7 @@
 import React from "react"
 import GoalItem from "./GoalItem"
 import ProgressBar from "./ProgressBar"
-import SuggestionMessage from "./SuggestionMessage"
+// import SuggestionMessage from "./SuggestionMessage"
 import {
   Box,
   Paper,
