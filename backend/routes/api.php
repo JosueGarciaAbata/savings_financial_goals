@@ -16,7 +16,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
     // Protegidas con jwt.cookie + auth:api
-    Route::middleware(['jwt.cookie'])->group(function () {
+    Route::middleware(['auth:api'])->group(function () {
         Route::post('/me', [AuthController::class, 'me'])->name('me');
         Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

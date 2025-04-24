@@ -14,11 +14,14 @@ import {
 import { Outlet, Link, useLocation } from "react-router-dom"
 import AssignmentIcon from "@mui/icons-material/Assignment"
 import BarChartIcon from "@mui/icons-material/BarChart"
+import { getAllDashboard } from "./service/getAllDashboard"
 
 const drawerWidth = 240
 
 const DashboardLayout = () => {
   const location = useLocation()
+
+  const data = getAllDashboard()
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -77,6 +80,8 @@ const DashboardLayout = () => {
       >
         <Toolbar />
         <Outlet />
+
+        {data.length > 0 ? data.map() : "No hay datos"}
       </Box>
     </Box>
   )

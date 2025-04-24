@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+
 class AuthController extends Controller
 {
     /**
@@ -52,7 +51,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login and set JWT as cookie.
+     * Login and return JWT as Bearer Token.
      */
     public function login()
     {
@@ -62,16 +61,12 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return response()->json(['message' => 'Login exitoso'])
-            ->cookie(
-                'jwt_token',
-                $token,
-                auth()->factory()->getTTL(), // duración en minutos
-                null,
-                null,
-                false,
-                false // HttpOnly activado
-            );
+        return response()->json([
+            'message' => 'Login exitoso',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 
     /**
@@ -79,29 +74,23 @@ class AuthController extends Controller
      */
     public function me()
     {
-
         return response()->json(auth()->user());
     }
 
     /**
-     * Logout and clear cookie.
+     * Logout (invalidate token).
      */
     public function logout()
     {
-        $token = request()->cookie('jwt_token');
-
-        if (!$token) {
-            return response()->json(['error' => 'No hay token para cerrar sesión'], 401);
-        }
-
         try {
-            JWTAuth::setToken($token)->invalidate(); // 👈 invalida manualmente el token
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Logout exitoso']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'No se pudo cerrar sesión', 'detalle' => $e->getMessage()], 500);
+            return response()->json([
+                'error' => 'No se pudo cerrar sesión',
+                'detalle' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json(['message' => 'Logout exitoso'])
-            ->withoutCookie('jwt_token'); // ✅ elimina la cookie del navegador
     }
 
     /**
@@ -109,17 +98,10 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        $newToken = auth()->refresh();
-
-        return response()->json(['message' => 'Token renovado'])
-            ->cookie(
-                'jwt_token',
-                $newToken,
-                auth()->factory()->getTTL(),
-                null,
-                null,
-                false,
-                true
-            );
+        return response()->json([
+            'access_token' => auth()->refresh(),
+            'token_type' => 'Bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }
