@@ -26,14 +26,8 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware(['jwt.cookie'])->group(function () {
 
-    Route::get('/test', function () {
-        return response()->json([
-            'message' => 'Ruta protegida funcionando ✅'
-        ]);
-    });
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+    // Poner aqui las rutas que se van a proteger 
+
 });
 
 
