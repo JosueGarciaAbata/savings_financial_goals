@@ -4,6 +4,10 @@ export async function createGoal(data) {
   return (await axios.post("/goals", data)).data
 }
 
+export async function updateGoal(data) {
+  return (await axios.put("/goals/"+data.goalId, data)).data
+}
+
 export async function getGoal(id) {
   return (await axios.get(`/goals/${id}`)).data.data
 }
