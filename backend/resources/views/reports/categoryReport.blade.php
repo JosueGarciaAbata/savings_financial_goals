@@ -72,6 +72,7 @@
             <thead>
                 <tr>
                     <th>Meta</th>
+                    <th>Estado</th>
                     <th>Monto Objetivo</th>
                     <th>Total Aportado</th>
                     <th>Fecha Límite</th>
@@ -82,6 +83,7 @@
                 @foreach ($categoryData['goals'] as $goal)
                     <tr>
                         <td>{{ $goal->name }}</td>
+                        <td>{{ $goal->status }}</td>
                         <td>${{ number_format($goal->target_amount, 2) }}</td>
                         <td>${{ number_format($goal->total_saved, 2) }}</td>
                         <td>{{ $goal->deadline }}</td>
