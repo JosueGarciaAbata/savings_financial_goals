@@ -5,6 +5,12 @@ export async function login(data) {
   return response.data
 }
 
+export async function logout() {
+  await axios.post("/auth/logout");
+  localStorage.removeItem("userData");
+}
+
+
 export async function register(data) {
   const formData = new FormData()
 
@@ -23,4 +29,9 @@ export async function register(data) {
   })
 
   return response.data
+}
+
+export async function getUserData() {
+  const response = await axios.get("/auth/me");
+  return await response.data;
 }

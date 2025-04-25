@@ -12,12 +12,14 @@ import {
   AccordionDetails,
 } from "@mui/material"
 
-const Panel = ({ goal }) => {
+const Panel = ({ data }) => {
+  const { goal } = data
+
   return (
     <>
       <Accordion key={goal.id} disableGutters elevation={0} sx={{ mt: 3 }}>
         <Box>
-          <ProgressBar goal={goal} />
+          <ProgressBar data={data} />
         </Box>
       </Accordion>
     </>

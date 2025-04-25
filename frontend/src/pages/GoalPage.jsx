@@ -16,7 +16,7 @@ export default function GoalPage() {
   const [modalOpen, setModalOpen] = useState(false)
 
   const {
-    data: goal,
+    data,
     isLoading: loadingGoal,
     error: goalError,
   } = useQuery({
@@ -24,28 +24,31 @@ export default function GoalPage() {
     queryFn: () => getGoal(id),
   })
 
+  console.log("Data", data)
+
   const {
     data: contributions,
     isLoading: loadingContributions,
     error: contributionsError,
   } = useQuery({
-    queryKey: ["contributions", id],
+    queryKey: ["contributions"],
     queryFn: () => getContributions(id),
   })
 
   const mutation = useMutation({
     mutationFn: createContribution,
     onSuccess: () => {
-      queryClient.invalidateQueries(["contributions", id])
+      queryClient.invalidateQueries(["contributions"])
     },
   })
+  
 
   if (loadingGoal || loadingContributions) return "Espera, cargando..."
   if (goalError || contributionsError)
     return <Alert severity="error">Error cargando datos.</Alert>
 
   const today = new Date().toISOString().split("T")[0]
-  const overdue = goal.deadline < today
+  const overdue = data?.goal?.deadline < today
 
   return (
     <Container maxWidth="xl" sx={{ mt: 5, mb: 5 }}>
@@ -57,7 +60,7 @@ export default function GoalPage() {
         ← Volver a metas
       </Button>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <GoalDetail goal={goal} />
+        <GoalDetail data={data}  />
         <Box display="flex" justifyContent="flex-end" mt={2}>
           {!overdue && (
             <Button
@@ -74,13 +77,13 @@ export default function GoalPage() {
         <ContributionModal
           open={modalOpen}
           handleClose={() => setModalOpen(false)}
-          goalId={goal.id}
-          goalCreatedAt={goal.created_at}
+          goalId={data.goal.id}
+          goalCreatedAt={data.goal.created_at}
           onSubmit={mutation.mutate}
           isLoading={mutation.isPending}
         />
 
-        <Panel goal={goal} />
+        <Panel data={data} />
       </Paper>
     </Container>
   )

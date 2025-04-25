@@ -18,60 +18,27 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts"
-import { differenceInDays, parseISO } from "date-fns"
 
 const colorMap = {
-  success: "#2e7d32",
-  warning: "#ed6c02",
-  error: "#d32f2f",
+  low: "#2e7d32",
+  medium: "#ed6c02",
+  high: "#d32f2f",
 }
 
-const ProgressBar = ({ goal }) => {
-  console.log(goal)
-  let color = "success"
-  const totalAportado = goal.contributions.reduce(
-    (sum, c) => sum + parseFloat(c.amount),
-    0
-  )
-  const startDate = parseISO(goal.created_at)
-  const endDate = parseISO(goal.deadline)
-  const today = new Date()
+const ProgressBar = ({ data }) => {
+  const { goal, progress } = data
 
-  const totalDays = differenceInDays(endDate, startDate)
-  const elapsedDays = differenceInDays(today, startDate)
-  const remainingDays = differenceInDays(endDate, today)
+  const color = colorMap[progress.risk_levels.weekly] || "success"
+  const progreso = Math.min(progress.progress_percentage, 100)
+  const totalAportado = parseFloat(progress.total_saved)
 
-  const totalWeeks = totalDays / 7
-  const elapsedWeeks = elapsedDays / 7
-  const remainingWeeks = remainingDays / 7
+  const lineColor = color
 
-  const savings = goal.target_amount
-  const savingsExpectedPerWeek = savings / totalWeeks
-  const savingsExpectedDate = savingsExpectedPerWeek * elapsedWeeks
-
-  const savingsRemaining = savings - totalAportado
-  const savingsNeededPerWeek = savingsRemaining / remainingWeeks
-
-  // Meta en riesgo si el nuevo ritmo necesario es el doble del ritmo original
-  const goalInRisk = savingsNeededPerWeek > 2 * savingsExpectedPerWeek
-
-  // Lógica de color
-  if (
-    goalInRisk ||
-    totalAportado < savingsExpectedDate - savingsExpectedPerWeek
-  ) {
-    color = "error" // rojo
-  } else if (totalAportado < savingsExpectedDate) {
-    color = "warning" // amarillo
-  } else {
-    color = "success" // verde
-  }
-  const lineColor = colorMap[color]
-  const progreso = Math.min((totalAportado / goal.target_amount) * 100, 100)
-  const data = goal.contributions.map((c, index) => {
+  const chartData = goal.contributions.map((c, index) => {
     const acumulado = goal.contributions
       .slice(0, index + 1)
-      .reduce((s, a) => s + parseFloat(a.amount), 0)
+      .reduce((sum, a) => sum + parseFloat(a.amount), 0)
+
     return {
       date: c.contribution_date,
       amount: acumulado,
@@ -88,12 +55,18 @@ const ProgressBar = ({ goal }) => {
           <LinearProgress
             variant="determinate"
             value={progreso}
-            color={color}
-            sx={{ height: 10, borderRadius: 5 }}
+            sx={{
+              height: 10,
+              borderRadius: 5,
+              backgroundColor: "#e0e0e0",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: color,
+              },
+            }}
           />
         </Box>
 
-        {goalInRisk && (
+        {progress.risk_levels.weekly === "high" && (
           <Alert severity="error" sx={{ mt: 2 }}>
             Estás lejos del ritmo esperado. Considera hacer mayores aportes para
             alcanzar la meta a tiempo.
@@ -113,7 +86,7 @@ const ProgressBar = ({ goal }) => {
         </Typography>
         <Paper variant="outlined" sx={{ p: 2 }}>
           <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={data}>
+            <LineChart data={chartData}>
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
