@@ -31,7 +31,7 @@ class GoalController extends Controller
             'data' => $goals
         ]);
     }
-    
+
     /**
      * Store a newly created goal in storage.
      *
@@ -41,12 +41,12 @@ class GoalController extends Controller
     public function store(StoreGoalRequest $request)
     {
         $goal = Goal::create([
-            'user_id'       => auth()->id(),
-            'category_id'   => $request->category_id,
-            'name'          => $request->name,
+            'user_id' => auth()->id(),
+            'category_id' => $request->category_id,
+            'name' => $request->name,
             'target_amount' => $request->target_amount,
-            'deadline'      => $request->deadline,
-            'status'        => 'active', // se asigna por defecto
+            'deadline' => $request->deadline,
+            'status' => 'active', // se asigna por defecto
         ]);
         
         RecalculatePaymentGoalsService::run($goal);
@@ -56,7 +56,7 @@ class GoalController extends Controller
             'data' => $goal
         ], 201);
     }
-        
+
     /**
      * Display a specific goal with its contributions.
      *
@@ -117,16 +117,16 @@ class GoalController extends Controller
     public function update(UpdateGoalRequest $request, $id): JsonResponse
     {
         $goal = Goal::where('id', $id)
-                    ->where('user_id', auth()->id())
-                    ->first();
-    
+            ->where('user_id', auth()->id())
+            ->first();
+
         if (!$goal) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Goal not found or unauthorized.'
             ], 404);
         }
-    
+
         $goal->update($request->only([
             'category_id',
             'name',
@@ -140,7 +140,7 @@ class GoalController extends Controller
             'message' => 'Goal updated successfully.',
             'data' => $goal
         ]);
-    }    
+    }
 
     /**
      * Remove the specified resource from storage.
