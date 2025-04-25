@@ -21,7 +21,7 @@ import { getAllDashboard } from "../components/service/getAllDashboard"
 import { deleteGoal } from "../api/goalsApi"
 import { useState } from "react"
 
-export default function GoalsDetails() {
+export default function GoalsDetails({ onEditGoal }) {
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
   const [goalToDelete, setGoalToDelete] = useState(null)
@@ -102,7 +102,7 @@ export default function GoalsDetails() {
                   variant="outlined"
                   size="small"
                   color="primary"
-                  onClick={() => console.log("Actualizar", goal.id)}
+                  onClick={() => onEditGoal(goal)}
                 >
                   Update
                 </Button>
