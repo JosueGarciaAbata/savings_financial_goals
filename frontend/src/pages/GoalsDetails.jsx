@@ -58,7 +58,7 @@ export default function GoalsDetails({ onEditGoal }) {
 
   const handleConfirmDelete = () => {
     deleteMutation.mutate(goalToDelete)
-    toast.success("Meta eliminada exitosamente.")
+    // toast.success("Meta eliminada exitosamente.")
     handleCloseModal()
   }
 
