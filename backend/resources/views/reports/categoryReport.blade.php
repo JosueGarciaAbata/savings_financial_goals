@@ -7,58 +7,61 @@
     <title>Reporte por Categoría</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 30px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
             color: #333;
         }
 
         h1 {
             text-align: center;
-            font-size: 28px;
+            margin-bottom: 20px;
             color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        .category-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #34495e;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #bdc3c7;
-            padding-bottom: 5px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         th,
         td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
         }
 
         th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+            background-color: #f5f5f5;
+            color: #2c3e50;
         }
 
-        .status {
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef;
+        }
+
+        .category-title {
+            font-size: 16px;
             font-weight: bold;
-            color: #27ae60;
+            color: #2c3e50;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 
 <body>
+
     <h1>Reporte de Metas por Categoría</h1>
-    <p>Usuario: {{ $userName }}</p>
-    <p>Fecha: {{ $currentDate }}</p>
+
+    <p><strong>Usuario:</strong> {{ $userName }}</p>
+    <p><strong>Fecha del reporte:</strong> {{ $currentDate }}</p>
 
     @foreach ($categoryGoals as $categoryData)
         <div class="category-title">
@@ -69,27 +72,26 @@
             <thead>
                 <tr>
                     <th>Meta</th>
-                    <th>Objetivo</th>
-                    <th>Ahorro Total</th>
-                    <th>Progreso</th>
+                    <th>Monto Objetivo</th>
+                    <th>Total Aportado</th>
                     <th>Fecha Límite</th>
-                    <th>Estado</th>
+                    <th>Progreso obtenido</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($categoryData['goals'] as $goal)
                     <tr>
                         <td>{{ $goal->name }}</td>
-                        <td>${{ $goal->target_amount }}</td>
-                        <td>${{ $goal->total_saved }}</td>
-                        <td>{{ $goal->progress }}%</td>
+                        <td>${{ number_format($goal->target_amount, 2) }}</td>
+                        <td>${{ number_format($goal->total_saved, 2) }}</td>
                         <td>{{ $goal->deadline }}</td>
-                        <td class="status">{{ $goal->status }}</td>
+                        <td>{{ $goal->progress }}%</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @endforeach
+
 </body>
 
 </html>

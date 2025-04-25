@@ -51,18 +51,18 @@ class ReportController extends Controller
         $userName = $user->full_name;
         $currentDate = now()->format('d/m/Y');
 
-        // Obtener las categorías del usuario
         $categories = Category::whereHas('goals', function ($query) use ($userId) {
+            // Asegúrate de que las categorías estén asociadas con el usuario actual
             $query->where('user_id', $userId);
         })->get();
 
         // Para cada categoría, obtener las metas y su progreso
-        $categoryGoals = $categories->map(function ($category) {
+        $categoryGoals = $categories->map(function ($category) use ($userId) {  // Aquí capturamos $userId
             $goals = Goal::where('category_id', $category->id)
+                ->where('user_id', $userId)  // Asegura que las metas son solo del usuario actual
                 ->select('id', 'name', 'target_amount', 'total_saved', 'deadline', 'status')
                 ->get()
                 ->map(function ($goal) {
-
                     $statusMap = [
                         'active' => 'Activo',
                         'completed' => 'Completado',
@@ -80,6 +80,7 @@ class ReportController extends Controller
                 'goals' => $goals
             ];
         });
+
 
         // Generar el PDF con la vista
         $pdf = Pdf::loadView('reports.categoryReport', [

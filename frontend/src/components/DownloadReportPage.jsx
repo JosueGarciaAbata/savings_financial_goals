@@ -57,14 +57,14 @@ const DownloadReportPage = () => {
     <Box sx={{ p: 3 }}>
       {/* Mensaje antes del botón */}
       <Typography variant="h6" gutterBottom>
-        Este reporte contiene el "Registro de aportes por metas" de tu cuenta.
+        Reporte por aportes de metas.
       </Typography>
 
       <Button onClick={downloadReport} variant="contained" color="primary">
         Descargar Reporte
       </Button>
 
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
         Reporte por categorias.
       </Typography>
 
