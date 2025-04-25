@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $user = User::first();
         $category = Category::first();
 
-        Goal::create([
+        $goal = Goal::create([
             'user_id' => $user->id,
             'category_id' => $category->id,
             'name' => 'Meta ejemplo',
@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'deadline' => now()->addMonths(3)->toDateString(),
             'status' => 'active',
         ]);
+        \App\Services\RecalculatePaymentGoalsService::run($goal);
     }
 
 }
