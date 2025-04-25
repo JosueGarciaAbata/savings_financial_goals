@@ -13,7 +13,7 @@ const GoalItem = ({ goal }) => {
             <strong>Estado:</strong> {goal.status}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <strong>Objetivo:</strong> ${goal.target_amount.toFixed(2)}
+            <strong>Objetivo:</strong> ${goal.target_amount}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <strong>Fecha límite:</strong>{" "}

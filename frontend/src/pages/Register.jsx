@@ -1,30 +1,30 @@
-import { useMutation } from "@tanstack/react-query";
-import { register } from "../api/authApi";
-import AuthForm from "../components/LoginForm";
-import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query"
+import { register } from "../api/authApi"
+import AuthForm from "../components/LoginForm"
+import { Link, useNavigate } from "react-router-dom"
 import {
   Box,
   Typography,
   Container,
   Alert,
   CircularProgress,
-} from "@mui/material";
-import { useState } from "react";
-import RegisterForm from "../components/RegisterForm";
+} from "@mui/material"
+import { useState } from "react"
+import RegisterForm from "../components/RegisterForm"
 
 export default function RegisterPage() {
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const navigate = useNavigate()
+  const [error, setError] = useState(null)
 
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      navigate("/login"); // Redirigir al login
+      navigate("/") // Redirigir al login
     },
     onError: () => {
-      setError("Error al registrarse");
+      setError("Error al registrarse")
     },
-  });
+  })
 
   return (
     <Container maxWidth="xs" sx={{ mt: 8 }}>
@@ -50,14 +50,11 @@ export default function RegisterPage() {
         />
         <Typography variant="body2" mt={2}>
           ¿Ya tienes cuenta?{" "}
-          <Link
-            to="/login"
-            style={{ color: "#1976d2", textDecoration: "none" }}
-          >
+          <Link to="/" style={{ color: "#1976d2", textDecoration: "none" }}>
             Inicia sesión
           </Link>
         </Typography>
       </Box>
     </Container>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-import axios from "./axiosInstance";
+import axios from "./axiosInstance"
 
 export async function login(data) {
-  const response = await axios.post("/login", data);
-  return response.data;
+  const response = await axios.post("/auth/login", data)
+  return response.data
 }
 
 export async function register(data) {
-  const formData = new FormData();
+  const formData = new FormData()
 
   // Añadir todos los campos
   for (const key in data) {
     if (data[key]) {
-      formData.append(key, data[key]);
+      formData.append(key, data[key])
     }
   }
-  console.log(formData);
-  
+  console.log(formData)
+
   const response = await axios.post("/register", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-  });
-  
-  return response.data;
+  })
+
+  return response.data
 }
