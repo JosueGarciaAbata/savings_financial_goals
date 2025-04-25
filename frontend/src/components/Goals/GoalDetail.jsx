@@ -1,10 +1,46 @@
 import { Box, Typography, Divider, Stack, Chip } from "@mui/material"
 import EventBusyIcon from "@mui/icons-material/EventBusy"
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 export default function GoalDetail({ data }) {
+  console.log("la data en goalDetail es: ", data);
   const { goal, progress } = data
-  const today = new Date().toISOString().split("T")[0]
-  const overdue = goal.deadline < today
+  const today = new Date().toISOString().split("T")[0];
+  const overdue = goal.deadline < today;
+  const progreso = Math.min(progress.progress_percentage, 100);
+  const completed = Math.round(progreso) >= 100;
+
+
+  let statusChip;
+
+  if (completed) {
+    statusChip = (
+      <Chip
+        label="Cumplida"
+        color="success"
+        icon={<CheckCircleIcon />}
+        sx={{ fontWeight: "bold" }}
+      />
+    );
+  } else if (overdue) {
+    statusChip = (
+      <Chip
+        label="Vencida"
+        color="error"
+        icon={<EventBusyIcon />}
+        sx={{ fontWeight: "bold" }}
+      />
+    );
+  } else {
+    statusChip = (
+      <Chip
+        label="En ejecución"
+        color="warning"
+        icon={<AccessTimeIcon />}
+        sx={{ fontWeight: "bold" }}
+      />
+    );
+  }
 
   return (
     <Box mb={4}>
@@ -12,14 +48,7 @@ export default function GoalDetail({ data }) {
         <Typography variant="h4" fontWeight="bold">
           {goal.name}
         </Typography>
-        {overdue && (
-          <Chip
-            label="Vencida"
-            color="error"
-            icon={<EventBusyIcon />}
-            sx={{ fontWeight: "bold" }}
-          />
-        )}
+        {statusChip}
       </Stack>
       {/* para poner mensaje 4. deteccion de inactividad */}
       <Stack spacing={1} sx={{ mt: 2 }}>

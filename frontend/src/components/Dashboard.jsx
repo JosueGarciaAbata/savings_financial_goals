@@ -134,15 +134,19 @@ const DashboardLayout = () => {
             <List component="div" disablePadding>
               <ListItemButton
                 sx={{ pl: 4 }}
-                component={Link}
-                to="/dashboard/reports/tablas"
-                selected={location.pathname === "/dashboard/reports/tablas"}
+                onClick={() => {
+                  window.open(
+                    "http://localhost:8000/api/reports/generalReport",
+                    "_blank"
+                  );
+                }}
               >
                 <ListItemIcon>
                   <TableChartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Metas de ahorro" />
               </ListItemButton>
+              
               <ListItemButton
                 sx={{ pl: 4 }}
                 component={Link}
