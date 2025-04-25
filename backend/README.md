@@ -1,66 +1,164 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Documentación del Proyecto: Simulador de Ahorro y Metas Financieras
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1. Información General
+**Nombre del Proyecto:** Simulador de Ahorro y Metas Financieras  
+**Tipo de Aplicación:** Web  
+**Arquitectura:** Separación frontend-backend con comunicación vía API REST  
+**Tecnologías:**
+- **Frontend:** React + Material UI
+- **Backend:** Laravel 11 (API REST)
+- **Seguridad:** Autenticación con JWT (via Tymon/JWTAuth)
 
-## About Laravel
+## 2. Objetivo del Proyecto
+Desarrollar una herramienta que permita a los usuarios planificar sus metas de ahorro, registrar aportes, recibir sugerencias y visualizar el progreso de sus objetivos financieros mediante cálculos simples y visualizaciones intuitivas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 3. Funcionalidades Principales
+### Backend (Laravel)
+- CRUD de usuarios, metas y aportes.
+- Autenticación segura con JWT.
+- Cálculo de progreso por meta.
+- Sugerencias automáticas semanales y mensuales.
+- Detección de inactividad.
+- Detección de metas en riesgo.
+- Exportación de reportes en PDF.
+- Validación de fechas (las metas no pueden tener fecha pasada).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Frontend (React)
+- Registro/login (JWT)
+- Creación de metas (nombre, categoría, monto, fecha límite).
+- Registro de aportes (fecha y cantidad).
+- Panel visual con barra de progreso y sugerencias.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 4. Reportes Generados
+Los reportes son visualizados desde el frontend y también pueden ser exportados como PDF desde el backend.
 
-## Learning Laravel
+### a. Reporte de Progreso de Meta
+```bash
+=== Progreso de Meta ===
+Meta: Viaje
+Objetivo: $1000
+Total Aportado: $450
+Progreso: 45%
+-------------------------
+[####---------] 45%
+Mensaje: ¡Buen trabajo! Estás en el camino correcto.
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### b. Reporte de Sugerencia de Ahorro
+```bash
+=== Sugerencia de Ahorro Semanal ===
+Meta: Fondo de emergencia
+Monto Objetivo: $1000
+Total Aportado: $300
+Monto Restante: $700
+Semanas Restantes: 8
+Ahorro Semanal Recomendado: $87.5
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### c. Reporte de Meta en Riesgo
+```bash
+=== Meta en Riesgo ===
+Meta: Viaje
+Monto Objetivo: $500
+Ahorro Semanal Necesario: $100
+Total Aportado: $100
+Semanas Restantes: 4
+Mensaje: ¡Estás en riesgo! Necesitas ahorrar $100 por semana.
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### d. Reporte de Inactividad
+```bash
+=== Alerta de Inactividad ===
+Usuario: Juan Pérez
+Último Aporte: 2025-04-17
+Estado: Inactivo
+Mensaje: "No has hecho aportes esta semana. Considera actualizar tu plan."
+```
 
-## Laravel Sponsors
+### e. Reporte de Validación de Fechas
+```bash
+=== Validación de Fechas ===
+Meta: Fondo para vacaciones
+Fecha Límite: 2025-04-20
+Estado: Vencida
+Mensaje: "La meta ha vencido. No alcanzaste el objetivo a tiempo."
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### f. Reporte de Registro de Aportes por Meta
+```bash
+=== Reporte de Aporte por Meta ===
+Meta: Fondo de emergencia
+Categoría: Salud
+Fecha Límite: 2025-06-30
 
-### Premium Partners
+| Fecha       | Monto | Total Acumulado | Progreso |
+|-------------|--------|------------------|-----------|
+| 2025-04-10  | $50    | $50              | 10%       |
+| 2025-04-15  | $100   | $150             | 30%       |
+| 2025-04-20  | $50    | $200             | 40%       |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Estado de la Meta: En ejecución
+```
 
-## Contributing
+### g. Reporte por Categoría
+```bash
+=== Reporte por Categoría: Salud ===
+Metas:
+- Fondo de emergencia: $500 objetivo, $300 ahorrado (60%)
+- Fondo médico: $1000 objetivo, $1000 ahorrado (Cumplida)
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### h. Resumen General de Ahorros
+```bash
+=== Resumen de Ahorros ===
+Total de Metas: 4
+Metas Cumplidas: 1
+Metas en Ejecución: 2
+Metas Vencidas: 1
 
-## Code of Conduct
+Total Ahorrado: $3100
+Total Restante: $1400
+Progreso Promedio: 77.5%
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 5. Seguridad
+- Protección de endpoints con middleware `auth:api`.
+- Emisión y validación de tokens JWT.
+- Solo usuarios autenticados pueden crear metas, ver sugerencias o registrar aportes.
 
-## Security Vulnerabilities
+## 6. Base de Datos (Modelos principales)
+- **User:** id, nombre, email, password
+- **Goal:** id, user_id, nombre, categoría, monto objetivo, fecha límite, estado
+- **Contribution:** id, goal_id, fecha, monto
+- **Suggestion:** id, goal_id, valor, frecuencia (weekly/monthly), nivel de riesgo, fecha de cálculo
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 7. Estructura de Carpetas
+```plaintext
+/backend
+  |- app
+     |- Models
+     |- Http/Controllers
+     |- Services
+     |- Repositories (opcional)
+  |- routes/api.php
 
-## License
+/frontend
+  |- src
+     |- components
+     |- pages
+     |- services
+     |- utils
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 8. Recomendaciones
+- Mantener la documentación del código con PHPDoc.
+- Usar migraciones y seeders para consistencia en el esquema.
+- Probar servicios clave con tests unitarios (Laravel Pest o PHPUnit).
+- Implementar paginación y filtros en endpoints para escalabilidad.
+
+## 9. Conclusión
+La aplicación permite a los usuarios tomar control de su ahorro mediante metas planificadas, recomendaciones automáticas y un sistema claro de seguimiento y reportes.
+
+Cumple con los criterios de seguridad, mantenibilidad y experiencia de usuario moderna.
+
+
