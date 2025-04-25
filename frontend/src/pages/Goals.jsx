@@ -5,6 +5,7 @@ import { Container, Typography, Alert, Paper } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import GoalsDetails from "./GoalsDetails"
+import { toast } from "react-toastify"
 
 export default function GoalsPage() {
   const [error, setError] = useState(null)
@@ -15,7 +16,8 @@ export default function GoalsPage() {
     mutationFn: createGoal,
     onSuccess: () => {
       queryClient.invalidateQueries(["goals"])
-      navigate("/dashboard/goals")
+      toast.success("Meta creada exitosamente.")
+      // navigate("/dashboard/goals")
     },
     onError: () => setError("No se pudo crear la meta."),
   })
@@ -24,7 +26,8 @@ export default function GoalsPage() {
     mutationFn: updateGoal,
     onSuccess: () => {
       queryClient.invalidateQueries(["goals"])
-      navigate("/dashboard/goals")
+      toast.success("Meta actualizada exitosamente.")
+      // navigate("/dashboard/goals")
     },
     onError: () => setError("No se pudo actualizar la meta."),
   })

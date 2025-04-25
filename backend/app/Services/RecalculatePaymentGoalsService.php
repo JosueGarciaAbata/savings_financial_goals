@@ -34,7 +34,7 @@ class RecalculatePaymentGoalsService
             'risk_level' => $risk,
             'calculated_at' => now()
         ]);
-        
+
         Suggestion::create([
             'goal_id' => $goal->id,
             'value' => $monthly,
@@ -46,8 +46,10 @@ class RecalculatePaymentGoalsService
 
     private static function calculateRiskLevel(float $weekly, float $original): string
     {
-        if ($weekly <= $original * 1.2) return 'low';
-        if ($weekly <= $original * 2.0) return 'medium';
+        if ($weekly <= $original * 1.2)
+            return 'low';
+        if ($weekly <= $original * 2.0)
+            return 'medium';
         return 'high';
     }
 }
