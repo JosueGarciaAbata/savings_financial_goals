@@ -1,5 +1,5 @@
 // src/layouts/DashboardLayout.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import {
   Drawer,
   List,
@@ -13,54 +13,48 @@ import {
   Box,
   ListItemButton,
   Collapse,
-} from "@mui/material";
+} from "@mui/material"
 import {
   Outlet,
   Link,
   useLocation,
   Navigate,
   useNavigate,
-} from "react-router-dom";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import EmptyState from "./EmptyState";
-import { getUserData, logout } from "../api/authApi";
-import UserMenu from "./UserMenu";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import PieChartIcon from "@mui/icons-material/PieChart";
-import TableChartIcon from "@mui/icons-material/TableChart";
+} from "react-router-dom"
+import AssignmentIcon from "@mui/icons-material/Assignment"
+import BarChartIcon from "@mui/icons-material/BarChart"
+import EmptyState from "./EmptyState"
+import { getUserData, logout } from "../api/authApi"
+import UserMenu from "./UserMenu"
+import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import PieChartIcon from "@mui/icons-material/PieChart"
+import TableChartIcon from "@mui/icons-material/TableChart"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const DashboardLayout = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [userData, setuserData] = useState(null);
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [userData, setuserData] = useState(null)
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("userData");
+    const storedUser = localStorage.getItem("userData")
     if (storedUser) {
-      setuserData(JSON.parse(storedUser));
+      setuserData(JSON.parse(storedUser))
     } else {
       const fetchUser = async () => {
         try {
-          const userData = await getUserData();
-          setuserData(userData);
-          localStorage.setItem("userData", JSON.stringify(userData));
+          const userData = await getUserData()
+          setuserData(userData)
+          localStorage.setItem("userData", JSON.stringify(userData))
         } catch (error) {
-          console.error("Error al obtener datos del usuario:", error);
+          console.error("Error al obtener datos del usuario:", error)
         }
-      };
+      }
 
-      fetchUser();
+      fetchUser()
     }
-  }, []);
-
-  const [openReports, setOpenReports] = useState(false);
-
-  const handleToggleReports = () => {
-    setOpenReports(!openReports);
-  };
+  }, [])
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -86,8 +80,8 @@ const DashboardLayout = () => {
             <UserMenu
               userData={userData}
               onLogout={() => {
-                logout();
-                navigate("/login");
+                logout()
+                navigate("/login")
               }}
             />
           </Box>
@@ -121,41 +115,16 @@ const DashboardLayout = () => {
           </ListItemButton>
 
           {/* Reportes - botón principal */}
-          <ListItemButton onClick={handleToggleReports}>
+          <ListItemButton
+            component={Link}
+            to="/dashboard/reports/goals"
+            selected={location.pathname === "/dashboard/reports/goals"}
+          >
             <ListItemIcon>
-              <BarChartIcon />
+              <TableChartIcon />
             </ListItemIcon>
             <ListItemText primary="Reportes" />
-            {openReports ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-
-          {/* Subítems de reportes */}
-          <Collapse in={openReports} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton
-                sx={{ pl: 4 }}
-                component={Link}
-                to="/dashboard/reports/tablas"
-                selected={location.pathname === "/dashboard/reports/tablas"}
-              >
-                <ListItemIcon>
-                  <TableChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Metas de ahorro" />
-              </ListItemButton>
-              <ListItemButton
-                sx={{ pl: 4 }}
-                component={Link}
-                to="/dashboard/reports/graficos"
-                selected={location.pathname === "/dashboard/reports/graficos"}
-              >
-                <ListItemIcon>
-                  <PieChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Gráficos" />
-              </ListItemButton>
-            </List>
-          </Collapse>
         </List>
       </Drawer>
 
@@ -168,7 +137,7 @@ const DashboardLayout = () => {
         <Outlet />
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout
