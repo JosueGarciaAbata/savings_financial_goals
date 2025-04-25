@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('target_amount', 10, 2);
             $table->date('deadline');
+            $table->decimal('total_saved', 10, 2)->default(0);
             $table->string('status')->default('active');
             $table->timestamps();
         });
