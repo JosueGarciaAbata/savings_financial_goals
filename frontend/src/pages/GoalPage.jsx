@@ -24,6 +24,8 @@ export default function GoalPage() {
     queryFn: () => getGoal(id),
   })
 
+  console.log("Data", data)
+
   const {
     data: contributions,
     isLoading: loadingContributions,
