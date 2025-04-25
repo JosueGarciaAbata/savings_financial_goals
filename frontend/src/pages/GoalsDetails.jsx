@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import { getAllDashboard } from "../components/service/getAllDashboard"
+import { useQuery } from "@tanstack/react-query";
+import { getAllDashboard } from "../components/service/getAllDashboard";
 import {
   Paper,
   List,
@@ -10,11 +10,11 @@ import {
   Button,
   Stack,
   Box,
-} from "@mui/material"
-import { Link } from "react-router-dom"
-import EmptyState from "../components/EmptyState"
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import EmptyState from "../components/EmptyState";
 
-export default function GoalsDetails() {
+export default function GoalsDetails({ onEditGoal }) {
   const {
     data: goals = [],
     isLoading,
@@ -22,10 +22,10 @@ export default function GoalsDetails() {
   } = useQuery({
     queryKey: ["goals"],
     queryFn: getAllDashboard,
-  })
+  });
 
-  if (isLoading) return <Typography>Cargando...</Typography>
-  if (error) return <Typography>Error al cargar las metas</Typography>
+  if (isLoading) return <Typography>Cargando...</Typography>;
+  if (error) return <Typography>Error al cargar las metas</Typography>;
 
   return goals.length > 0 ? (
     <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -66,7 +66,10 @@ export default function GoalsDetails() {
                 variant="outlined"
                 size="small"
                 color="primary"
-                onClick={() => console.log("Actualizar", goal.id)}
+                onClick={() => {onEditGoal(goal)
+                  console.log("goal to edit:");
+                  console.log(goal);
+                }}
               >
                 Update
               </Button>
@@ -85,5 +88,5 @@ export default function GoalsDetails() {
     </List>
   ) : (
     <EmptyState message="Aún no tienes metas registradas" />
-  )
+  );
 }

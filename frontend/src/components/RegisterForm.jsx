@@ -18,7 +18,7 @@ import {
       email: "",
       password: "",
       gender: "",
-      brith_date: "",
+      birth_date: "",
       profile_picture: null,
     });
   
@@ -104,15 +104,15 @@ import {
             onChange={handleChange}
             required
           >
-            <MenuItem value="masculino">Masculino</MenuItem>
-            <MenuItem value="femenino">Femenino</MenuItem>
+            <MenuItem value="male">Masculino</MenuItem>
+            <MenuItem value="female">Femenino</MenuItem>
             {/* <MenuItem value="otro">Otro</MenuItem> */}
           </TextField>
           <TextField
             label="Fecha de nacimiento"
-            name="brith_date"
+            name="birth_date"
             type="date"
-            value={form.brith_date}
+            value={form.birth_date}
             onChange={handleChange}
             InputLabelProps={{ shrink: true }}
             required
