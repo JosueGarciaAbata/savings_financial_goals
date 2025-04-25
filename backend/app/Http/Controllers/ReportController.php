@@ -91,7 +91,6 @@ class ReportController extends Controller
 
         return $pdf->stream('reporte_por_categoria.pdf');
     }
-
     public function generateGoalStatusReport()
     {
         $user = auth()->user();

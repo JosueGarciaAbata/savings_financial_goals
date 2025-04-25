@@ -22,7 +22,6 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-
 Route::get('/test_email', function () {
     $goal = [
         'name' => 'Meta de prueba: Comprar laptop',
@@ -35,7 +34,6 @@ Route::get('/test_email', function () {
 
     return response()->json(['message' => 'Correo enviado a tu cuenta ✅']);
 });
-
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/goals', [GoalController::class, 'index']);
@@ -66,7 +64,6 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/contributions/{id}', [ContributionController::class, 'destroy']);
 });
 
-
 Route::get('/fake-login/{userId}', function ($userId) {
     $user = User::findOrFail($userId);
     $token = JWTAuth::fromUser($user);
@@ -76,7 +73,6 @@ Route::get('/fake-login/{userId}', function ($userId) {
         'user' => $user
     ]);
 });
-
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);

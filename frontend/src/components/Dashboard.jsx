@@ -81,7 +81,7 @@ const DashboardLayout = () => {
               userData={userData}
               onLogout={() => {
                 logout()
-                navigate("/login")
+                navigate("/")
               }}
             />
           </Box>

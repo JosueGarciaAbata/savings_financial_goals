@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\InactivityGoalNotification;
 use App\Mail\SavingsGoalNotification;
+use App\Mail\SendSavingsReportNotification;
 use App\Models\Goal;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 class NotificationController extends Controller
@@ -39,7 +41,6 @@ class NotificationController extends Controller
             }
         }
     }
-
     public static function sendInactivityGoalNotification($userId, $goalId)
     {
 
@@ -76,7 +77,19 @@ class NotificationController extends Controller
             }
         }
     }
+    public static function sendSavingsReport(User $user, $goals)
+    {
 
+        $data = [
+            'userName' => $user->full_name,
+            'goals' => $goals,
+            'currentDate' => now()->format('d/m/Y'),
+        ];
+
+        $pdf = Pdf::loadView('reports.goalProgressReport', $data);
+
+        Mail::to($user->email)->send(new SendSavingsReportNotification($user, $pdf));
+    }
 
 
 
