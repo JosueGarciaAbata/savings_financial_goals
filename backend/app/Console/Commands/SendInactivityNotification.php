@@ -31,51 +31,25 @@ class SendInactivityNotification extends Command
     public function handle()
     {
         try {
-            // Obtener el usuario con ID 1
-            $user = User::find(1); // Obtener solo el usuario con ID 1
 
-            if ($user) {
-                // Obtener todas las metas del usuario con ID 1
+            $users = User::all();
+
+            foreach ($users as $user) {
+
                 $goals = Goal::where('user_id', $user->id)->get();
 
-                // Iterar sobre cada meta del usuario
                 foreach ($goals as $goal) {
-                    // Enviar la notificación de inactividad si es necesario
+
                     NotificationController::sendInactivityGoalNotification($user->id, $goal->id);
 
-                    // Mostrar en la consola que el correo de alerta de inactividad ha sido enviado
+
                     $this->info('Alerta de inactividad enviada a: ' . $user->email . ' para la meta: ' . $goal->name);
                 }
-            } else {
-                // Si el usuario no existe, mostrar un mensaje de error en la consola
-                $this->info('No se encontró el usuario con ID 1.');
             }
         } catch (Exception $e) {
-            // Capturar y mostrar cualquier error que ocurra durante la ejecución
-            $this->error('Error al enviar la alerta de inactividad: ' . $e->getMessage());
+
+            $this->error('Error al enviar el correo para la meta: ' . $goal->name . ' - ' . $e->getMessage());
         }
-        // try {
-
-        //     $users = User::all();
-
-
-        //     foreach ($users as $user) {
-
-        //         $goals = Goal::where('user_id', $user->id)->get();
-
-
-        //         foreach ($goals as $goal) {
-
-        //             NotificationController::sendInactivityGoalNotification($user->id, $goal->id);
-
-
-        //             $this->info('Alerta de inactividad enviada a: ' . $user->email . ' para la meta: ' . $goal->name);
-        //         }
-        //     }
-        // } catch (Exception $e) {
-
-        //     $this->error('Error al enviar el correo para la meta: ' . $goal->name . ' - ' . $e->getMessage());
-        // }
     }
 
 }
