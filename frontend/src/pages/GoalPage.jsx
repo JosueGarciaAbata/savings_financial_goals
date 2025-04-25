@@ -9,6 +9,7 @@ import GoalDetail from "../components/Goals/GoalDetail"
 import AddIcon from "@mui/icons-material/Add"
 import ContributionModal from "../components/Goals/Contributions/ContributionModal"
 import Panel from "../features/progress-panel/components/Panel"
+import { toast } from "react-toastify"
 
 export default function GoalPage() {
   const { id } = useParams()
@@ -24,8 +25,6 @@ export default function GoalPage() {
     queryFn: () => getGoal(id),
   })
 
-  console.log("Data", data)
-
   const {
     data: contributions,
     isLoading: loadingContributions,
@@ -39,9 +38,9 @@ export default function GoalPage() {
     mutationFn: createContribution,
     onSuccess: () => {
       queryClient.invalidateQueries(["contributions"])
+      toast.success("Aporte añadido exitosamente.")
     },
   })
-  
 
   if (loadingGoal || loadingContributions) return "Espera, cargando..."
   if (goalError || contributionsError)
@@ -60,7 +59,7 @@ export default function GoalPage() {
         ← Volver a metas
       </Button>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <GoalDetail data={data}  />
+        <GoalDetail data={data} />
         <Box display="flex" justifyContent="flex-end" mt={2}>
           {!overdue && (
             <Button
