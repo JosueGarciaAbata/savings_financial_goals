@@ -34,14 +34,20 @@ export default function GoalDetail({ data }) {
           <strong>Fecha límite:</strong> {goal.deadline}
         </Typography>{" "}
         <Typography variant="body1">
-          <strong>Sugerencia semanal:</strong> {progress.weekly_suggestion}
+          <strong>Sugerencia semanal:</strong>{" "}
+          {progress.weekly_suggestion
+            ? `Te recomendamos ahorrar $${progress.weekly_suggestion} para alcanzar tu meta`
+            : "No hay sugerencia de ahorro disponible en este momento."}{" "}
         </Typography>{" "}
         <Typography>
-          <strong>Sugerencia mensual:</strong> {progress.monthly_suggestion}
+          <strong>Sugerencia mensual:</strong>{" "}
+          {progress.weekly_suggestion
+            ? `Te recomendamos ahorrar $${progress.monthly_suggestion} para alcanzar tu meta`
+            : "No hay sugerencia de ahorro disponible en este momento."}
         </Typography>
         <Typography variant="body1">
           <strong>Semanas restantes:</strong>{" "}
-          {Number(progress.weeks_remaining).toFixed(1)}
+          {Number(progress.weeks_remaining).toFixed(0)}
         </Typography>
         <Typography variant="body1">
           <strong>Meses restantes:</strong>{" "}
