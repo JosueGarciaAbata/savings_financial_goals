@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContributionController;
+use App\Http\Controllers\PDFController;
 use App\Mail\GoalReminderMail;
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -48,6 +49,32 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+
+//Reportes
+
+/**
+Reporte de metas cumplidas , vencidas , ejecucion
+
+Reporte de meta por categoria 
+
+Reporte de meta individual
+
+Resumen de aporte
+
+*Notificaciones* (ni idea si le hago como mensaje o pdf)
+
+Meta en riesgo
+
+Meta inactiva
+
+Meta vencida
+
+ */
+
+Route::post("/generalReport", [PDFController::class, "generateGeneralReport"])->name("generalReport");
+
+
+//
 Route::get('/fake-login/{userId}', function ($userId) {
     $user = User::findOrFail($userId);
     $token = JWTAuth::fromUser($user);
