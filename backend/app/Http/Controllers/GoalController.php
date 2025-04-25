@@ -7,6 +7,9 @@ use App\Http\Requests\StoreGoalRequest;
 use App\Http\Requests\UpdateGoalRequest;
 use App\Models\Goal;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
+use App\Services\RecalculatePaymentGoalsService;
+
 use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class GoalController extends Controller
@@ -22,7 +25,7 @@ class GoalController extends Controller
                     ->with('category') // Opcional: si quieres mostrar la categoría
                     ->latest('created_at')
                     ->get();
-
+        $goals->each->checkAndExpire();
         return response()->json([
             'status' => 'success',
             'data' => $goals
@@ -45,7 +48,8 @@ class GoalController extends Controller
             'deadline'      => $request->deadline,
             'status'        => 'active', // se asigna por defecto
         ]);
-    
+        
+        RecalculatePaymentGoalsService::run($goal);
         return response()->json([
             'status' => 'success',
             'message' => 'Goal created successfully.',
@@ -61,23 +65,47 @@ class GoalController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $goal = Goal::with(['category', 'contributions'])
+        
+        $goal = Goal::with(['category', 'contributions', 'suggestions'])
                     ->where('id', $id)
                     ->where('user_id', auth()->id())
                     ->first();
-
+    
         if (!$goal) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Goal not found.'
             ], 404);
         }
+    
+        $progress = $goal->getProgressData();
+    
+        $weekly = $goal->suggestions()
+            ->where('frequency', 'weekly')
+            ->latest('calculated_at')
+            ->first();
+    
+        $monthly = $goal->suggestions()
+            ->where('frequency', 'monthly')
+            ->latest('calculated_at')
+            ->first();
+
+        $goal->checkAndExpire();
 
         return response()->json([
             'status' => 'success',
-            'data' => $goal
+            'goal' => $goal,
+            'progress' => array_merge($progress, [
+                'weekly_suggestion' => optional($weekly)->value,
+                'monthly_suggestion' => optional($monthly)->value,
+                'risk_levels' => [
+                    'weekly' => optional($weekly)->risk_level,
+                    'monthly' => optional($monthly)->risk_level
+                ]
+            ])
         ]);
-    }
+    }    
+    
     
     /**
      * Update the specified goal of the authenticated user.
@@ -106,7 +134,7 @@ class GoalController extends Controller
             'deadline',
             'status'
         ]));
-    
+        RecalculatePaymentGoalsService::run($goal);
         return response()->json([
             'status' => 'success',
             'message' => 'Goal updated successfully.',
@@ -117,8 +145,30 @@ class GoalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id): JsonResponse
     {
-        //
-    }
+        $goal = Goal::where('id', $id)->where('user_id', auth()->id())->first();
+    
+        if (!$goal) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Goal not found or unauthorized.'
+            ], 404);
+        }
+        
+        if ($goal->contributions()->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cannot delete a goal with contributions.'
+            ], 422);
+        }
+        
+        $goal->delete();
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Goal deleted successfully.'
+        ]);
+    }    
+    
 }
