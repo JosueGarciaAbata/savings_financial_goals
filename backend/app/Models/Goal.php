@@ -37,7 +37,7 @@ class Goal extends Model
         'total_saved',
         'deadline',
         'status'
-    ];    
+    ];
 
     public function user()
     {

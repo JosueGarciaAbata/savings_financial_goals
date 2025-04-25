@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContributionController;
+use App\Http\Controllers\ReportController;
 use App\Mail\GoalReminderMail;
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -35,14 +36,6 @@ Route::get('/test_email', function () {
     return response()->json(['message' => 'Correo enviado a tu cuenta ✅']);
 });
 
-Route::middleware(['jwt.cookie'])->group(function () {
-
-
-    Route::get('/test', function () {
-        return response()->json(['message' => 'Hola mundo']);
-    });
-
-});
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/goals', [GoalController::class, 'index']);
@@ -53,6 +46,33 @@ Route::middleware('auth:api')->group(function () {
     //Route::delete('/goals/{goal}', [GoalController::class, 'destroy']);
 
 });
+
+
+//Reportes
+
+/**
+Reporte de metas cumplidas , vencidas , ejecucion
+
+Reporte de meta por categoria 
+
+Reporte de meta individual
+
+Resumen de aporte
+
+*Notificaciones* (ni idea si le hago como mensaje o pdf)
+
+Meta en riesgo
+
+Meta inactiva
+
+Meta vencida
+
+ */
+Route::middleware('auth:api')->prefix('reports')->group(function () {
+    Route::get("/generalReport", [ReportController::class, "generateGeneralReport"])->name("generalReport");
+});
+
+
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
