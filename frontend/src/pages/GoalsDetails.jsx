@@ -20,6 +20,7 @@ import EmptyState from "../components/EmptyState"
 import { getAllDashboard } from "../components/service/getAllDashboard"
 import { deleteGoal } from "../api/goalsApi"
 import { useState } from "react"
+import { toast } from "react-toastify"
 
 export default function GoalsDetails({ onEditGoal }) {
   const queryClient = useQueryClient()
@@ -57,6 +58,7 @@ export default function GoalsDetails({ onEditGoal }) {
 
   const handleConfirmDelete = () => {
     deleteMutation.mutate(goalToDelete)
+    toast.success("Meta eliminada exitosamente.")
     handleCloseModal()
   }
 

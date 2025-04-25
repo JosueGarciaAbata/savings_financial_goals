@@ -21,6 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteContribution } from "../../../api/goalsApi"
 import { useState } from "react"
+import { toast } from "react-toastify"
 
 export default function ContributionsTable({ contributions }) {
   const total = contributions.reduce((sum, c) => sum + parseFloat(c.amount), 0)
@@ -33,6 +34,7 @@ export default function ContributionsTable({ contributions }) {
     mutationFn: deleteContribution,
     onSuccess: () => {
       queryClient.invalidateQueries(["contributions"])
+      toast.success("Aporte eliminado correctamente")
     },
   })
 

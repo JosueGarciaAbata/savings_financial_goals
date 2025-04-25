@@ -8,6 +8,8 @@ import GoalPage from "./pages/GoalPage"
 import Dashboard from "./components/Dashboard"
 import PrivateRoute from "./components/PrivateRoute"
 import NotFoundPage from "./components/NotFoundPage"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   return (
@@ -32,6 +34,18 @@ function App() {
         {/* fallback */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   )
 }
