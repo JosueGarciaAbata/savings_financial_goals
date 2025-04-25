@@ -21,7 +21,6 @@ class RecalculatePaymentGoalsService
 
         $weekly = round($remaining / $weeksLeft, 2);
         $monthly = round($remaining / $monthsLeft, 2);
-        echo "Weekly: $weekly, Monthly: $monthly\n";
         $originalWeeks = max(Carbon::parse($goal->created_at)->diffInWeeks($deadline), 1);
         $originalWeekly = round($target / $originalWeeks, 2);
 
@@ -34,7 +33,7 @@ class RecalculatePaymentGoalsService
             'risk_level' => $risk,
             'calculated_at' => now()
         ]);
-        
+
         Suggestion::create([
             'goal_id' => $goal->id,
             'value' => $monthly,
@@ -46,8 +45,10 @@ class RecalculatePaymentGoalsService
 
     private static function calculateRiskLevel(float $weekly, float $original): string
     {
-        if ($weekly <= $original * 1.2) return 'low';
-        if ($weekly <= $original * 2.0) return 'medium';
+        if ($weekly <= $original * 1.2)
+            return 'low';
+        if ($weekly <= $original * 2.0)
+            return 'medium';
         return 'high';
     }
 }
