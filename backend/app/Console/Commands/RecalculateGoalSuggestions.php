@@ -27,11 +27,11 @@ class RecalculateGoalSuggestions extends Command
     public function handle()
     {
         $goals = Goal::where('status', 'active')->get();
-    
+
         foreach ($goals as $goal) {
             \App\Services\RecalculatePaymentGoalsService::run($goal);
         }
-    
+
         $this->info('Goal suggestions recalculated successfully.');
-    }    
+    }
 }
