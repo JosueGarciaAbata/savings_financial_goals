@@ -1,9 +1,9 @@
-import { Box, Typography, Divider, Stack } from "@mui/material";
-import EventBusyIcon from "@mui/icons-material/EventBusy";
+import { Box, Typography, Divider, Stack, Chip } from "@mui/material"
+import EventBusyIcon from "@mui/icons-material/EventBusy"
 
 export default function GoalDetail({ goal }) {
-    const today = new Date().toISOString().split("T")[0];
-    const overdue = goal.deadline < today;
+  const today = new Date().toISOString().split("T")[0]
+  const overdue = goal.deadline < today
 
   return (
     <Box mb={4}>
@@ -21,10 +21,7 @@ export default function GoalDetail({ goal }) {
         )}
       </Stack>
       {/* para poner mensaje 4. deteccion de inactividad */}
-      <Stack spacing={1}>
-
-      </Stack>
-      <Stack spacing={1}>
+      <Stack spacing={1} sx={{ mt: 2 }}>
         <Typography variant="body1">
           <strong>Categoría:</strong> {goal.category.name}
         </Typography>
@@ -39,5 +36,5 @@ export default function GoalDetail({ goal }) {
 
       <Divider sx={{ mt: 2 }} />
     </Box>
-  );
+  )
 }

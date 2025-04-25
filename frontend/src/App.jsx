@@ -5,9 +5,7 @@ import LoginPage from "./pages/Login"
 import RegisterPage from "./pages/Register"
 import GoalsPage from "./pages/Goals"
 import GoalPage from "./pages/GoalPage"
-import Panel from "./features/progress-panel/components/Panel"
 import Dashboard from "./components/Dashboard"
-import DashboardHome from "./components/DashboardHome"
 
 function App() {
   return (
@@ -21,7 +19,7 @@ function App() {
 
         {/* Rutas protegidas */}
         <Route path="dashboard" element={<Dashboard />}>
-          <Route index element={<DashboardHome />} />
+          {/* <Route index element={<DashboardHome />} /> */}
           <Route path="goals">
             <Route index element={<GoalsPage />} />
             <Route path=":id" element={<GoalPage />} />

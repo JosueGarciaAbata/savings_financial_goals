@@ -79,7 +79,7 @@ const ProgressBar = ({ goal }) => {
   })
 
   return (
-    <Card sx={{ mt: 2 }}>
+    <Card sx={{ mt: 2, boxShadow: "none" }}>
       <CardContent>
         <Box>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>

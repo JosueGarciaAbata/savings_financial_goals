@@ -13,7 +13,7 @@ export default function ContributionsTable({ contributions }) {
   const total = contributions.reduce((sum, c) => sum + parseFloat(c.amount), 0)
 
   return (
-    <Paper sx={{ mt: 4, p: 3, borderRadius: 2, boxShadow: 3 }}>
+    <Paper sx={{ mt: 4, p: 3 }} elevation={0}>
       <Typography variant="h6" gutterBottom>
         Aportes realizados (Total: ${total.toFixed(2)})
       </Typography>

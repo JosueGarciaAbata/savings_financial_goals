@@ -1,9 +1,7 @@
-// src/features/progress-panel/components/Panel.jsx
-// Aqui debe venir un id y con ese id buscar la meta y lo demás se mantiene.
 import React from "react"
 import GoalItem from "./GoalItem"
 import ProgressBar from "./ProgressBar"
-// import SuggestionMessage from "./SuggestionMessage"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {
   Box,
   Paper,
@@ -17,15 +15,7 @@ import {
 const Panel = ({ goal }) => {
   return (
     <>
-      <Accordion
-        key={goal.id}
-        disableGutters
-        elevation={0}
-        sx={{ border: "1px solid #e0e0e0", mt: 3, borderRadius: 2 }}
-      >
-        <AccordionSummary>
-          <Typography variant="subtitle1">Rendimiento</Typography>
-        </AccordionSummary>
+      <Accordion key={goal.id} disableGutters elevation={0} sx={{ mt: 3 }}>
         <Box>
           <ProgressBar goal={goal} />
         </Box>

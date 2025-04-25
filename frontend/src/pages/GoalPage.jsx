@@ -48,7 +48,14 @@ export default function GoalPage() {
   const overdue = goal.deadline < today
 
   return (
-    <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
+    <Container maxWidth="xl" sx={{ mt: 5, mb: 5 }}>
+      <Button
+        variant="outlined"
+        href="/dashboard/goals/"
+        sx={{ mb: 3, fontWeight: "bold" }}
+      >
+        ← Volver a metas
+      </Button>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
         <GoalDetail goal={goal} />
         <Box display="flex" justifyContent="flex-end" mt={2}>
