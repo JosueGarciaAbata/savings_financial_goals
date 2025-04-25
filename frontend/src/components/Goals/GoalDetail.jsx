@@ -16,7 +16,7 @@ export default function GoalDetail({ data }) {
   if (completed) {
     statusChip = (
       <Chip
-        label="Completed"
+        label="Complteada"
         color="success"
         icon={<CheckCircleIcon />}
         sx={{ fontWeight: "bold" }}
@@ -25,7 +25,7 @@ export default function GoalDetail({ data }) {
   } else if (overdue) {
     statusChip = (
       <Chip
-        label="Overdue"
+        label="Vencida"
         color="error"
         icon={<EventBusyIcon />}
         sx={{ fontWeight: "bold" }}
@@ -34,7 +34,7 @@ export default function GoalDetail({ data }) {
   } else {
     statusChip = (
       <Chip
-        label="In progress"
+        label="En progreso"
         color="warning"
         icon={<AccessTimeIcon />}
         sx={{ fontWeight: "bold" }}
