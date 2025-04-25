@@ -11,4 +11,6 @@ Artisan::command('inspire', function () {
 
 Schedule::command('goals:recalculate-suggestions')->weekly()->sundays()->at('00:00');
 
-Schedule::command('savings-goal-notification')->dailyAt('08:00');
+Schedule::command('savings-goal-notification')->dailyAt('00:00');
+
+Schedule::command('app:send-inactivity-notification')->dailyAt('08:00');

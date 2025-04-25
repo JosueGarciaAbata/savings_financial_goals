@@ -3,51 +3,45 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class InactivityGoalNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $userName;
+    public $goalName;
+    public $lastContributionDate;
+    public $currentDate;
+
     /**
      * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Inactivity Goal Notification',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return void
      */
-    public function attachments(): array
+    public function __construct($userName, $goalName, $lastContributionDate, $currentDate)
     {
-        return [];
+        $this->userName = $userName;
+        $this->goalName = $goalName;
+        $this->lastContributionDate = $lastContributionDate;
+        $this->currentDate = $currentDate;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Alerta de Inactividad - Aporte Semanal')
+            ->view('emails.inactivityGoalNotification')
+            ->with([
+                'userName' => $this->userName,
+                'goalName' => $this->goalName,
+                'lastContributionDate' => $this->lastContributionDate,
+                'currentDate' => $this->currentDate
+            ]);
     }
 }

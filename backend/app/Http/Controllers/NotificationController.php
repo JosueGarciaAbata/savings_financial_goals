@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InactivityGoalNotification;
 use App\Mail\SavingsGoalNotification;
 use App\Models\Goal;
 use App\Models\User;
@@ -39,6 +40,42 @@ class NotificationController extends Controller
         }
     }
 
+    public static function sendInactivityGoalNotification($userId, $goalId)
+    {
+
+        $user = User::find($userId);
+        $goal = Goal::find($goalId);
+
+        if ($user && $goal) {
+
+            $lastContribution = $goal->contributions()->latest('contribution_date')->first();
+
+            if ($lastContribution) {
+
+                $lastContributionDate = Carbon::parse($lastContribution->contribution_date);
+                $currentDate = Carbon::now();
+
+
+                if ($lastContributionDate->diffInWeeks($currentDate) >= 1) {
+
+                    $userName = $user->full_name;
+                    $goalName = $goal->name;
+                    $lastContributionDateFormatted = $lastContributionDate->format('d/m/Y');
+                    $currentDateFormatted = $currentDate->format('d/m/Y');
+
+
+                    Mail::to($user->email)->send(new InactivityGoalNotification(
+                        $userName,
+                        $goalName,
+                        $lastContributionDateFormatted,
+                        $currentDateFormatted
+                    ));
+
+
+                }
+            }
+        }
+    }
 
 
 
