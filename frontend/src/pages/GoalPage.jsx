@@ -59,7 +59,7 @@ export default function GoalPage() {
         ← Volver a metas
       </Button>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <GoalDetail goal={data.goal} />
+        <GoalDetail data={data} />
         <Box display="flex" justifyContent="flex-end" mt={2}>
           {!overdue && (
             <Button
@@ -82,7 +82,7 @@ export default function GoalPage() {
           isLoading={mutation.isPending}
         />
 
-        <Panel goal={data.goal} />
+        <Panel data={data} />
       </Paper>
     </Container>
   )
