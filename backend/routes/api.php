@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContributionController;
-use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ReportController;
 use App\Mail\GoalReminderMail;
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -68,9 +68,9 @@ Meta inactiva
 Meta vencida
 
  */
-
-Route::post("/generalReport", [PDFController::class, "generateGeneralReport"])->name("generalReport");
-
+Route::middleware('auth:api')->prefix('reports')->group(function () {
+    Route::get("/generalReport", [ReportController::class, "generateGeneralReport"])->name("generalReport");
+});
 
 
 
