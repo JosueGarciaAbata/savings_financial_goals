@@ -91,7 +91,6 @@ class ReportController extends Controller
 
         return $pdf->stream('reporte_por_categoria.pdf');
     }
-
     public function generateGoalStatusReport()
     {
         $user = auth()->user();
@@ -99,12 +98,10 @@ class ReportController extends Controller
         $userName = $user->full_name;
         $currentDate = now()->format('d/m/Y');
 
-        // Obtener las metas del usuario por estado
         $completedGoals = Goal::where('user_id', $userId)
             ->where('status', 'completed')
             ->select('id', 'name', 'target_amount', 'deadline', 'status')
             ->get();
-
         $expiredGoals = Goal::where('user_id', $userId)
             ->where('status', 'expired')
             ->select('id', 'name', 'target_amount', 'deadline', 'status')
@@ -117,29 +114,29 @@ class ReportController extends Controller
 
         // Calcular el progreso para cada meta
         foreach ($completedGoals as $goal) {
-            $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id); // Calcular progreso
-            $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y'); // Formatear fecha
+            $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id);
+            $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y');
+
+            foreach ($expiredGoals as $goal) {
+                $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id);
+                $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y');
+            }
+
+            foreach ($activeGoals as $goal) {
+                $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id);
+                $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y');
+            }
+
+            // Generar el PDF con la vista
+            $pdf = Pdf::loadView('reports.goalStatusReport', [
+                'completedGoals' => $completedGoals,
+                'expiredGoals' => $expiredGoals,
+                'activeGoals' => $activeGoals,
+                'userName' => $userName,
+                'currentDate' => $currentDate
+            ]);
+
+            return $pdf->stream('reporte_de_metasporestado.pdf');
         }
-
-        foreach ($expiredGoals as $goal) {
-            $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id); // Calcular progreso
-            $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y'); // Formatear fecha
-        }
-
-        foreach ($activeGoals as $goal) {
-            $goal->progress = CalculateProgressGoal::calculateProgressGoal($goal->id); // Calcular progreso
-            $goal->deadline = Carbon::parse($goal->deadline)->format('d/m/Y'); // Formatear fecha
-        }
-
-        // Generar el PDF con la vista
-        $pdf = Pdf::loadView('reports.goalStatusReport', [
-            'completedGoals' => $completedGoals,
-            'expiredGoals' => $expiredGoals,
-            'activeGoals' => $activeGoals,
-            'userName' => $userName,
-            'currentDate' => $currentDate
-        ]);
-
-        return $pdf->stream('reporte_de_metasporestado.pdf');
     }
 }

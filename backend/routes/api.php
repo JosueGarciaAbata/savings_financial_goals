@@ -22,7 +22,6 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-
 Route::get('/test_email', function () {
     $goal = [
         'name' => 'Meta de prueba: Comprar laptop',
@@ -36,7 +35,6 @@ Route::get('/test_email', function () {
     return response()->json(['message' => 'Correo enviado a tu cuenta ✅']);
 });
 
-
 Route::middleware('auth:api')->group(function () {
     Route::get('/goals', [GoalController::class, 'index']);
     Route::post('/goals', [GoalController::class, 'store']);
@@ -47,33 +45,11 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
-
-//Reportes
-
-/**
-Reporte de metas cumplidas , vencidas , ejecucion
-
-Reporte de meta por categoria 
-
-Reporte de meta individual
-
-Resumen de aporte
-
-*Notificaciones* (ni idea si le hago como mensaje o pdf)
-
-Meta en riesgo
-
-Meta inactiva
-
-Meta vencida
-
- */
 Route::middleware('auth:api')->prefix('reports')->group(function () {
     Route::get("/generalReport", [ReportController::class, "generateGeneralReport"])->name("generalReport");
     Route::get("/category", [ReportController::class, "generateCategoryReport"]);
     Route::get("/state", [ReportController::class, "generateGoalStatusReport"]);
 });
-
 
 
 Route::middleware('auth:api')->group(function () {
@@ -88,7 +64,6 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/contributions/{id}', [ContributionController::class, 'destroy']);
 });
 
-
 Route::get('/fake-login/{userId}', function ($userId) {
     $user = User::findOrFail($userId);
     $token = JWTAuth::fromUser($user);
@@ -99,11 +74,9 @@ Route::get('/fake-login/{userId}', function ($userId) {
     ]);
 });
 
-
 Route::middleware('auth:api')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
 });
-
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/contributions', [ContributionController::class, 'index']); // todos los aportes del usuario
