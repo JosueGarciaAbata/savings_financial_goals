@@ -1,4 +1,4 @@
-# Documentación del Proyecto: Simulador de Ahorro y Metas Financieras
+# Simulador de Ahorro y Metas Financieras
 
 ## 1. Información General
 **Nombre del Proyecto:** Simulador de Ahorro y Metas Financieras  
@@ -112,33 +112,33 @@ Este reporte segmenta las metas del usuario según su estado: **Completadas**, *
 
 ## **/backend**
 
-```markdown
-### Clona el repositorio
+### 1. Clona el repositorio
 ```bash
 git clone https://github.com/usuario/proyecto-backend.git
 cd proyecto-backend
 ```
 
-### Instala las dependencias
+### 2. Instala las dependencias
 ```bash
 composer install
 ```
 
-### Copia el archivo de entorno y configúralo
+### 3. Copia el archivo de entorno y configúralo
 ```bash
 cp .env.example .env
 ```
 
-### Genera la clave de la aplicación
+### 4. Genera la clave de la aplicación
 ```bash
 php artisan key:generate
 ```
-### Crea el enlace simbólico al almacenamiento (para archivos públicos)
+
+### 5. Crea el enlace simbólico al almacenamiento (para archivos públicos)
 ```bash
 php artisan storage:link
 ```
 
-### Configura la conexión a la base de datos en el archivo `.env`
+### 6. Configura la conexión a la base de datos en el archivo `.env`
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -148,14 +148,40 @@ DB_USERNAME=usuario
 DB_PASSWORD=contraseña
 ```
 
-### Ejecuta las migraciones y seeders
+### 7. Ejecuta las migraciones y seeders
 ```bash
 php artisan migrate:refresh --seed
 ```
 
-### Instala JWT Auth
+### 8. Genera la clave secreta para JWT Auth
 ```bash
 php artisan jwt:secret
+```
+
+### Publica el archivo de configuración (si no se genera automáticamente):
+```bash
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider
+```
+
+### Asegúrate de tener en tu `.env`:
+```env
+JWT_SECRET=la_clave_generada
+JWT_TTL=60  # Opcional: tiempo de expiración en minutos
+```
+
+### 10. Configura el sistema de correos
+
+Para habilitar el envío de notificaciones (como reportes o recordatorios por email), configura las siguientes variables en tu archivo `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=tu_correo@gmail.com
+MAIL_PASSWORD=contraseña_de_aplicacion
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=tu_correo@gmail.com
+MAIL_FROM_NAME="Finance App"
 ```
 
 ### Levanta el servidor local
