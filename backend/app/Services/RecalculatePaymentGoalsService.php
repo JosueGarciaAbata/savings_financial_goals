@@ -21,6 +21,7 @@ class RecalculatePaymentGoalsService
 
         $weekly = round($remaining / $weeksLeft, 2);
         $monthly = round($remaining / $monthsLeft, 2);
+        //echo "Weekly: $weekly, Monthly: $monthly\n";
         $originalWeeks = max(Carbon::parse($goal->created_at)->diffInWeeks($deadline), 1);
         $originalWeekly = round($target / $originalWeeks, 2);
 

@@ -24,9 +24,12 @@ class GoalAndContributionSeeder extends Seeder
                 // Actualizar el total_saved en la meta
                 $goal->increment('total_saved', $contribution->amount);
             });
-
+        });
+        
+        $goals = Goal::all();
+        foreach ($goals as $goal) {
             // Recalcular sugerencias
             RecalculatePaymentGoalsService::run($goal);
-        });
+        }
     }
 }
