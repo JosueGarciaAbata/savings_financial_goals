@@ -41,6 +41,7 @@ export default function GoalPage() {
       queryClient.invalidateQueries(["contributions"])
     },
   })
+  
 
   if (loadingGoal || loadingContributions) return "Espera, cargando..."
   if (goalError || contributionsError)
@@ -59,7 +60,7 @@ export default function GoalPage() {
         ← Volver a metas
       </Button>
       <Paper sx={{ p: 4, borderRadius: 3 }}>
-        <GoalDetail data={data} />
+        <GoalDetail data={data}  />
         <Box display="flex" justifyContent="flex-end" mt={2}>
           {!overdue && (
             <Button
