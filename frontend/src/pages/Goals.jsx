@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createGoal } from "../api/goalsApi"
+import { createGoal, updateGoal } from "../api/goalsApi"
 import GoalForm from "../components/Goals/GoalForm"
 import { Container, Typography, Alert, Paper } from "@mui/material"
 import { useState } from "react"
@@ -10,14 +10,26 @@ export default function GoalsPage() {
   const [error, setError] = useState(null)
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const mutation = useMutation({
+
+  const mutationSave = useMutation({
     mutationFn: createGoal,
     onSuccess: () => {
       queryClient.invalidateQueries(["goals"])
       navigate("/dashboard/goals")
     },
     onError: () => setError("No se pudo crear la meta."),
-  })
+  });
+
+  const mutationUpdate = useMutation({
+    mutationFn: updateGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["goals"])
+      navigate("/dashboard/goals")
+    },
+    onError: () => setError("No se pudo actualizar la meta."),
+  });
+
+  const [goalToEdit, setGoalToEdit] = useState(null)
 
   return (
     <Container maxWidth="xl" sx={{ mt: 8 }}>
@@ -40,8 +52,16 @@ export default function GoalsPage() {
         )}
 
         <GoalForm
-          onSubmit={(data) => mutation.mutate(data)}
-          isLoading={mutation.isPending}
+          goal={goalToEdit}
+          onSubmit={(formData) => {
+            if (formData.goalId) {
+              mutationUpdate.mutate(formData);
+            } else {
+              mutationSave.mutate(formData);
+            }
+          }}
+          onCancel={() => setGoalToEdit(null)}
+          isLoading={mutationSave.isPending}
         />
       </Paper>
 
@@ -56,7 +76,7 @@ export default function GoalsPage() {
       >
         Tus metas
       </Typography>
-      <GoalsDetails />
+      <GoalsDetails onEditGoal={setGoalToEdit}/>
     </Container>
   )
 }
