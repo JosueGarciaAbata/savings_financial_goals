@@ -43,6 +43,10 @@
         tr:hover {
             background-color: #eef;
         }
+
+        .category-title {
+            font-size: 18px;
+            font
     </style>
 </head>
 

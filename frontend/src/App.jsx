@@ -8,6 +8,7 @@ import GoalPage from "./pages/GoalPage"
 import Dashboard from "./components/Dashboard"
 import PrivateRoute from "./components/PrivateRoute"
 import NotFoundPage from "./components/NotFoundPage"
+import DownloadReportPage from "./components/DownloadReportPage"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -28,6 +29,7 @@ function App() {
               <Route index element={<GoalsPage />} />
               <Route path=":id" element={<GoalPage />} />
             </Route>
+            <Route path="reports/goals" element={<DownloadReportPage />} />
           </Route>
         </Route>
 

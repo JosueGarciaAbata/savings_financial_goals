@@ -70,6 +70,7 @@ Meta vencida
  */
 Route::middleware('auth:api')->prefix('reports')->group(function () {
     Route::get("/generalReport", [ReportController::class, "generateGeneralReport"])->name("generalReport");
+    Route::get("/category", [ReportController::class, "generateCategoryReport"]);
 });
 
 
