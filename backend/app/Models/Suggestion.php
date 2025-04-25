@@ -22,7 +22,7 @@ class Suggestion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['goal_id', 'message', 'calculated_at'];
+    protected $fillable = ['goal_id', 'value', 'frequency', 'risk_level', 'calculated_at'];
 
     public function goal()
     {
