@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('goal_id')->constrained('goals')->onDelete('cascade');
-            $table->text('message');
+            $table->enum('frequency', ['weekly', 'monthly']);
+            $table->decimal('value', 10, 2);
+            $table->enum('risk_level', ['low', 'medium', 'high'])->default('low');
             $table->timestamp('calculated_at')->useCurrent();
-        });
+            $table->timestamps();
+        });        
         
     }
 

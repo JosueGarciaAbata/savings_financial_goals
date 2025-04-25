@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Contribution;
 use App\Models\Suggestion;
+use Illuminate\Support\Carbon;
 
 /**
  * Class Goal
@@ -29,9 +30,14 @@ class Goal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'category_id', 'name', 'target_amount',
-        'deadline', 'status'
-    ];
+        'user_id',
+        'category_id',
+        'name',
+        'target_amount',
+        'total_saved',
+        'deadline',
+        'status'
+    ];    
 
     public function user()
     {
@@ -51,5 +57,31 @@ class Goal extends Model
     public function suggestions()
     {
         return $this->hasMany(Suggestion::class);
+    }
+
+    public function getProgressData(): array
+    {
+        $progressPercentage = min(100, round(($this->total_saved / $this->target_amount) * 100, 2));
+        $remaining = max(0, $this->target_amount - $this->total_saved);
+
+        return [
+            'progress_percentage' => $progressPercentage,
+            'total_saved' => $this->total_saved,
+            'remaining_amount' => $remaining,
+            'weeks_remaining' => Carbon::today()->diffInWeeks(Carbon::parse($this->deadline), false),
+            'months_remaining' => Carbon::today()->diffInMonths(Carbon::parse($this->deadline), false),
+        ];
+    }
+
+    public function checkAndExpire(): void
+    {
+        if (
+            $this->status === 'active' &&
+            Carbon::today()->gt(Carbon::parse($this->deadline)) &&
+            $this->total_saved < $this->target_amount
+        ) {
+            $this->status = 'expired';
+            $this->save();
+        }
     }
 }

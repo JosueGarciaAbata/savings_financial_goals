@@ -1,31 +1,31 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../api/authApi";
-import AuthForm from "../components/LoginForm";
+import { Link, useNavigate } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
+import { login } from "../api/authApi"
+import AuthForm from "../components/LoginForm"
 import {
   Box,
   Typography,
   Container,
   Alert,
   CircularProgress,
-} from "@mui/material";
-import { useState } from "react";
-import LoginForm from "../components/LoginForm";
+} from "@mui/material"
+import { useState } from "react"
+import LoginForm from "../components/LoginForm"
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const navigate = useNavigate()
+  const [error, setError] = useState(null)
   // Hook que te permite ejecutar funciones asíncronas (como peticiones POST) y manejar su estado (loading, success, error).
   const mutation = useMutation({
     mutationFn: login, // función que hace la peticion
     onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard"); // Redirigir después del login
+      localStorage.setItem("token", data.access_token)
+      navigate("/dashboard") // Redirigir después del login
     },
     onError: () => {
-      setError("Error al iniciar sesión");
+      setError("Error al iniciar sesión")
     },
-  });
+  })
 
   return (
     <Container maxWidth="xs" sx={{ mt: 8 }}>
@@ -60,5 +60,5 @@ export default function LoginPage() {
         </Typography>
       </Box>
     </Container>
-  );
+  )
 }
