@@ -5,7 +5,7 @@ export default function UserMenu({ userData, onLogout }) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       <Avatar
-        src={`/${userData?.profile_picture}`}
+        src={`http://127.0.0.1:8000/${userData?.profile_picture}`}
         alt={userData?.first_name}
         sx={{ width: 32, height: 32 }}
       />

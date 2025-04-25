@@ -14,7 +14,13 @@ import {
   ListItemButton,
   Collapse,
 } from "@mui/material";
-import { Outlet, Link, useLocation, Navigate, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import EmptyState from "./EmptyState";
@@ -28,7 +34,7 @@ const drawerWidth = 240;
 
 const DashboardLayout = () => {
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userData, setuserData] = useState(null);
 
   useEffect(() => {
@@ -90,69 +96,68 @@ const DashboardLayout = () => {
 
       {/* Sidebar */}
       <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
+        variant="permanent"
+        sx={{
           width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <Toolbar />
-      <List>
-        {/* Metas */}
-        <ListItemButton
-          component={Link}
-          to="/dashboard/goals"
-          selected={location.pathname === "/dashboard/goals"}
-        >
-          <ListItemIcon>
-            <AssignmentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Metas" />
-        </ListItemButton>
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+      >
+        <Toolbar />
+        <List>
+          {/* Metas */}
+          <ListItemButton
+            component={Link}
+            to="/dashboard/goals"
+            selected={location.pathname === "/dashboard/goals"}
+          >
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Metas" />
+          </ListItemButton>
 
-        {/* Reportes - botón principal */}
-        <ListItemButton onClick={handleToggleReports}>
-          <ListItemIcon>
-            <BarChartIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reportes" />
-          {openReports ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
+          {/* Reportes - botón principal */}
+          <ListItemButton onClick={handleToggleReports}>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reportes" />
+            {openReports ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
 
-        {/* Subítems de reportes */}
-        <Collapse in={openReports} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton
-              sx={{ pl: 4 }}
-              component={Link}
-              to="/dashboard/reports/graficos"
-              selected={location.pathname === "/dashboard/reports/graficos"}
-            >
-              <ListItemIcon>
-                <PieChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Gráficos" />
-            </ListItemButton>
-
-            <ListItemButton
-              sx={{ pl: 4 }}
-              component={Link}
-              to="/dashboard/reports/tablas"
-              selected={location.pathname === "/dashboard/reports/tablas"}
-            >
-              <ListItemIcon>
-                <TableChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Tablas" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List>
-    </Drawer>
+          {/* Subítems de reportes */}
+          <Collapse in={openReports} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/dashboard/reports/tablas"
+                selected={location.pathname === "/dashboard/reports/tablas"}
+              >
+                <ListItemIcon>
+                  <TableChartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Metas de ahorro" />
+              </ListItemButton>
+              <ListItemButton
+                sx={{ pl: 4 }}
+                component={Link}
+                to="/dashboard/reports/graficos"
+                selected={location.pathname === "/dashboard/reports/graficos"}
+              >
+                <ListItemIcon>
+                  <PieChartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Gráficos" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+      </Drawer>
 
       {/* Contenido principal */}
       <Box
