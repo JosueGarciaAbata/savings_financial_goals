@@ -5,11 +5,13 @@ export async function createGoal(data) {
 }
 
 export async function getGoal(id) {
-  return (await axios.get(`/goals/${id}`)).data.data
+  const res = await axios.get(`/goals/${id}`)
+  return res.data
 }
 
 export async function getContributions(goalId) {
-  return (await axios.get(`/goals/${goalId}/contributions`)).data.contributions
+  const res = await axios.get(`/goals/${goalId}/contributions`)
+  return res.data.contributions
 }
 
 export async function createContribution(data) {
@@ -19,4 +21,13 @@ export async function createContribution(data) {
 export async function getCategories() {
   const response = await axios.get("/categories")
   return response.data.categories
+}
+
+export async function deleteContribution(id) {
+  return (await axios.delete(`/contributions/${id}`)).data
+}
+
+export async function deleteGoal(id) {
+  const res = await axios.delete(`/goals/${id}`)
+  return res
 }
