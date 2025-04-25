@@ -1,5 +1,5 @@
 // src/layouts/DashboardLayout.jsx
-import React from "react"
+import React from "react";
 import {
   Drawer,
   List,
@@ -12,16 +12,16 @@ import {
   Paper,
   Box,
   ListItemButton,
-} from "@mui/material"
-import { Outlet, Link, useLocation } from "react-router-dom"
-import AssignmentIcon from "@mui/icons-material/Assignment"
-import BarChartIcon from "@mui/icons-material/BarChart"
-import EmptyState from "./EmptyState"
+} from "@mui/material";
+import { Outlet, Link, useLocation } from "react-router-dom";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import EmptyState from "./EmptyState";
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 const DashboardLayout = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -48,8 +48,7 @@ const DashboardLayout = () => {
       >
         <Toolbar />
         <List>
-          <ListItem
-            button
+          <ListItemButton
             component={Link}
             to="/dashboard/goals"
             selected={location.pathname === "/dashboard/goals"}
@@ -58,18 +57,18 @@ const DashboardLayout = () => {
               <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="Metas" />
-          </ListItem>
-          <ListItem
-            button
+          </ListItemButton>
+
+          <ListItemButton
             component={Link}
             to="/dashboard/reports"
-            selected={location.pathname === "/reports"}
+            selected={location.pathname === "/dashboard/reports"} // 🔧 esto también lo corregí
           >
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Reportes" />
-          </ListItem>
+          </ListItemButton>
         </List>
       </Drawer>
 
@@ -82,7 +81,7 @@ const DashboardLayout = () => {
         <Outlet />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

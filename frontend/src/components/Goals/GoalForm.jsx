@@ -1,30 +1,45 @@
-import { TextField, Button, Stack, MenuItem, Box, Alert } from "@mui/material"
-import { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { getCategories } from "../../api/goalsApi"
+import { TextField, Button, Stack, MenuItem, Box, Alert } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "../../api/goalsApi";
 
-export default function GoalForm({ onSubmit, isLoading }) {
-  const [form, setForm] = useState({
+export default function GoalForm({ onSubmit, isLoading, goal, onCancel }) {
+  const initialForm = {
+    goalId: "",
     name: "",
     category_id: "",
     target_amount: "",
     deadline: "",
-  })
+  };
 
-  const [error, setError] = useState(null)
+  const [form, setForm] = useState(initialForm);
+
+  useEffect(() => {
+    if (goal) {
+      setForm({
+        goalId: goal.id,
+        name: goal.name,
+        category_id: goal.category_id,
+        target_amount: goal.target_amount,
+        deadline: goal.deadline,
+      });
+    }
+  }, [goal]);
+
+  const [error, setError] = useState(null);
 
   const { data: categories, isLoading: categoriasLoading } = useQuery({
     queryKey: ["categorias"],
     queryFn: getCategories,
-  })
+  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setForm({ ...form, [name]: value })
-  }
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (
       !form.name ||
@@ -32,21 +47,22 @@ export default function GoalForm({ onSubmit, isLoading }) {
       !form.target_amount ||
       !form.deadline
     ) {
-      return setError("Todos los campos son obligatorios.")
+      return setError("Todos los campos son obligatorios.");
     }
 
     if (isNaN(form.target_amount) || parseFloat(form.target_amount) <= 0) {
-      return setError("El monto debe ser un número positivo.")
+      return setError("El monto debe ser un número positivo.");
     }
 
-    const curDate = new Date().toISOString().split("T")[0]
+    const curDate = new Date().toISOString().split("T")[0];
     if (form.deadline < curDate) {
-      return setError("La fecha límite debe ser posterior a hoy.")
+      return setError("La fecha límite debe ser posterior a hoy.");
     }
 
-    setError(null)
-    onSubmit(form)
-  }
+    setError(null);
+    onSubmit(form);
+    setForm(initialForm);
+  };
 
   return (
     <form onSubmit={handleSubmit} style={{ width: "100%" }}>
@@ -70,11 +86,17 @@ export default function GoalForm({ onSubmit, isLoading }) {
           required
           disabled={categoriasLoading}
         >
-          {categories?.map((cat) => (
-            <MenuItem key={cat.id} value={cat.id}>
-              {cat.name}
-            </MenuItem>
-          ))}
+          {categoriasLoading ? (
+            <MenuItem disabled>Cargando categorías...</MenuItem>
+          ) : categories?.length > 0 ? (
+            categories.map((cat) => (
+              <MenuItem key={cat.id} value={cat.id}>
+                {cat.name}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem disabled>No hay categorías</MenuItem>
+          )}
         </TextField>
 
         <TextField
@@ -106,10 +128,22 @@ export default function GoalForm({ onSubmit, isLoading }) {
             size="large"
             disabled={isLoading}
           >
-            {isLoading ? "Guardando..." : "Crear Meta"}
+            {isLoading ? "Guardando..." : !goal ? "Crear Meta" : "Guardar Meta"}
           </Button>
+          {goal && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => {
+                setForm(initialForm);
+                onCancel();
+              }}
+            >
+              Cancelar edición
+            </Button>
+          )}
         </Box>
       </Stack>
     </form>
-  )
+  );
 }

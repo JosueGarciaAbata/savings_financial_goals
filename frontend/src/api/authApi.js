@@ -16,7 +16,7 @@ export async function register(data) {
   }
   console.log(formData)
 
-  const response = await axios.post("/register", formData, {
+  const response = await axios.post("/auth/register", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
