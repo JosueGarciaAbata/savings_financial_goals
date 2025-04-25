@@ -6,10 +6,10 @@ export async function login(data) {
 }
 
 export async function logout() {
-  await axios.post("/auth/logout");
-  localStorage.removeItem("userData");
+  await axios.post("/auth/logout")
+  localStorage.removeItem("userData")
+  localStorage.removeItem("token")
 }
-
 
 export async function register(data) {
   const formData = new FormData()
@@ -32,6 +32,6 @@ export async function register(data) {
 }
 
 export async function getUserData() {
-  const response = await axios.get("/auth/me");
-  return await response.data;
+  const response = await axios.get("/auth/me")
+  return await response.data
 }

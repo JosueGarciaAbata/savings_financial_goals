@@ -1,5 +1,5 @@
-import { Avatar, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Avatar, Button, Box } from "@mui/material"
+import { Link } from "react-router-dom"
 
 export default function UserMenu({ userData, onLogout }) {
   return (
@@ -13,10 +13,15 @@ export default function UserMenu({ userData, onLogout }) {
         variant="contained"
         color="primary"
         onClick={onLogout}
-        sx={{ color: "#fff", textTransform: "none" }}
+        sx={{
+          color: "#fff",
+          textTransform: "none",
+          ml: 2,
+          backgroundColor: "#90a4ae",
+        }}
       >
         Cerrar Sesión
       </Button>
     </Box>
-  );
+  )
 }

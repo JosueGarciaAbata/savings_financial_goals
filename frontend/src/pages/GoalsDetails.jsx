@@ -35,8 +35,6 @@ export default function GoalsDetails({ onEditGoal }) {
     queryFn: getAllDashboard,
   })
 
-  console.log("Goals", goals)
-
   const deleteMutation = useMutation({
     mutationFn: deleteGoal,
     onSuccess: () => {

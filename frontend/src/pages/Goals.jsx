@@ -18,7 +18,7 @@ export default function GoalsPage() {
       navigate("/dashboard/goals")
     },
     onError: () => setError("No se pudo crear la meta."),
-  });
+  })
 
   const mutationUpdate = useMutation({
     mutationFn: updateGoal,
@@ -27,7 +27,7 @@ export default function GoalsPage() {
       navigate("/dashboard/goals")
     },
     onError: () => setError("No se pudo actualizar la meta."),
-  });
+  })
 
   const [goalToEdit, setGoalToEdit] = useState(null)
 
@@ -55,9 +55,9 @@ export default function GoalsPage() {
           goal={goalToEdit}
           onSubmit={(formData) => {
             if (formData.goalId) {
-              mutationUpdate.mutate(formData);
+              mutationUpdate.mutate(formData)
             } else {
-              mutationSave.mutate(formData);
+              mutationSave.mutate(formData)
             }
           }}
           onCancel={() => setGoalToEdit(null)}
@@ -76,7 +76,7 @@ export default function GoalsPage() {
       >
         Tus metas
       </Typography>
-      <GoalsDetails onEditGoal={setGoalToEdit}/>
+      <GoalsDetails onEditGoal={setGoalToEdit} />
     </Container>
   )
 }

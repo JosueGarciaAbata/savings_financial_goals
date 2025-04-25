@@ -6,6 +6,8 @@ import RegisterPage from "./pages/Register"
 import GoalsPage from "./pages/Goals"
 import GoalPage from "./pages/GoalPage"
 import Dashboard from "./components/Dashboard"
+import PrivateRoute from "./components/PrivateRoute"
+import NotFoundPage from "./components/NotFoundPage"
 
 function App() {
   return (
@@ -18,17 +20,17 @@ function App() {
         </Route>
 
         {/* Rutas protegidas */}
-        <Route path="dashboard" element={<Dashboard />}>
-          {/* <Route index element={<DashboardHome />} /> */}
-          <Route path="goals">
-            <Route index element={<GoalsPage />} />
-            <Route path=":id" element={<GoalPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route path="goals">
+              <Route index element={<GoalsPage />} />
+              <Route path=":id" element={<GoalPage />} />
+            </Route>
           </Route>
-          {/* <Route path="reports" element={<ReportsPage />} /> */}
         </Route>
 
         {/* fallback */}
-        <Route path="*" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   )
