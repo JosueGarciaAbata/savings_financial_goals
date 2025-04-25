@@ -1,7 +1,8 @@
 import { Box, Typography, Divider, Stack, Chip } from "@mui/material"
 import EventBusyIcon from "@mui/icons-material/EventBusy"
 
-export default function GoalDetail({ goal }) {
+export default function GoalDetail({ data }) {
+  const { goal, progress } = data
   const today = new Date().toISOString().split("T")[0]
   const overdue = goal.deadline < today
 
@@ -31,6 +32,22 @@ export default function GoalDetail({ goal }) {
         </Typography>
         <Typography variant="body1">
           <strong>Fecha límite:</strong> {goal.deadline}
+        </Typography>{" "}
+        <Typography variant="body1">
+          <strong>Sugerencia semanal:</strong> {progress.weekly_suggestion}
+        </Typography>{" "}
+        <Typography>
+          <strong>Sugerencia mensual:</strong> {progress.monthly_suggestion}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Semanas restantes:</strong>{" "}
+          {Number(progress.weeks_remaining).toFixed(1)}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Meses restantes:</strong>{" "}
+          {progress.months_remaining < 1
+            ? "menos de un mes"
+            : progress.months_remaining}
         </Typography>
       </Stack>
 
